@@ -3,6 +3,7 @@ package skala.skoro.domain.evaluation.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import skala.skoro.domain.evaluation.dto.KeywordResponse;
 import skala.skoro.domain.evaluation.dto.PeerEvaluationDetailResponse;
 import skala.skoro.domain.evaluation.dto.PeerEvaluationStatusResponse;
 import skala.skoro.domain.evaluation.dto.SubmitPeerEvaluationRequest;
@@ -33,6 +34,11 @@ public class PeerEvaluationController {
             @RequestBody SubmitPeerEvaluationRequest request) {
         peerEvaluationService.submitPeerEvaluation(peerEvaluationId, request);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/keywords")
+    public List<KeywordResponse> getSystemKeywords() {
+        return peerEvaluationService.getAllSystemKeywords();
     }
 
 }

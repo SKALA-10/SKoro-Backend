@@ -113,4 +113,14 @@ public class PeerEvaluationService {
                         .build())
                 .toList();
     }
+
+    @Transactional(readOnly = true)
+    public List<KeywordResponse> getAllSystemKeywords() {
+        return keywordRepository.findAll().stream()
+                .map(k -> KeywordResponse.builder()
+                        .keywordId(k.getId())
+                        .keywordName(k.getKeywordName())
+                        .build())
+                .toList();
+    }
 }
