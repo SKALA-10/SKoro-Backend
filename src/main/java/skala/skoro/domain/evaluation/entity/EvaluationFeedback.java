@@ -4,6 +4,7 @@ package skala.skoro.domain.evaluation.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import skala.skoro.domain.common.BaseEntity;
+import skala.skoro.domain.period.entity.Period;
 
 @Entity
 @Table(name = "evaluation_feedbacks")
