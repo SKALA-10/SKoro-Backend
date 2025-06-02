@@ -8,7 +8,6 @@ import skala.skoro.domain.common.BaseEntity;
 @Entity
 @Table(name = "evaluation_feedbacks")
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -29,4 +28,15 @@ public class EvaluationFeedback extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "period_id")
     private Period period;
+
+    @Builder
+    public EvaluationFeedback(String content, TeamEvaluation teamEvaluation, Period period) {
+        this.content = content;
+        this.teamEvaluation = teamEvaluation;
+        this.period = period;
+    }
+
+    public void updateContent(String content) {
+        this.content = content;
+    }
 }

@@ -7,7 +7,6 @@ import skala.skoro.domain.common.BaseEntity;
 @Entity
 @Table(name = "keywords")
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -20,4 +19,9 @@ public class Keyword extends BaseEntity {
 
     @Column(name = "keyword_name")
     private String keywordName;
+
+    @Builder
+    public Keyword(String keywordName) {
+        this.keywordName = keywordName;
+    }
 }

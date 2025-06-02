@@ -7,7 +7,6 @@ import skala.skoro.domain.common.BaseEntity;
 @Entity
 @Table(name = "peer_evaluation_keywords")
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -28,4 +27,11 @@ public class PeerEvaluationKeyword extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "peer_evaluation_id")
     private PeerEvaluation peerEvaluation;
+
+    @Builder
+    public PeerEvaluationKeyword(String customKeyword, Keyword keyword, PeerEvaluation peerEvaluation) {
+        this.customKeyword = customKeyword;
+        this.keyword = keyword;
+        this.peerEvaluation = peerEvaluation;
+    }
 }

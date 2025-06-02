@@ -7,7 +7,6 @@ import skala.skoro.domain.common.BaseEntity;
 @Entity
 @Table(name = "final_evaluation_reports")
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -37,4 +36,23 @@ public class FinalEvaluationReport extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "emp_no")
     private Employee employee;
+
+    @Builder
+    public FinalEvaluationReport(String report, Integer ranking, Double score, Integer contributionRate, String skill, TeamEvaluation teamEvaluation, Employee employee) {
+        this.report = report;
+        this.ranking = ranking;
+        this.score = score;
+        this.contributionRate = contributionRate;
+        this.skill = skill;
+        this.teamEvaluation = teamEvaluation;
+        this.employee = employee;
+    }
+
+    public void updateReport(String report, Integer ranking, Double score, Integer contributionRate, String skill) {
+        this.report = report;
+        this.ranking = ranking;
+        this.score = score;
+        this.contributionRate = contributionRate;
+        this.skill = skill;
+    }
 }

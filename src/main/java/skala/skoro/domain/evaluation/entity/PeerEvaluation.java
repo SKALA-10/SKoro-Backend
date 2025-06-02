@@ -7,7 +7,6 @@ import skala.skoro.domain.common.BaseEntity;
 @Entity
 @Table(name = "peer_evaluations")
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -37,4 +36,20 @@ public class PeerEvaluation extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_evaluation_id")
     private TeamEvaluation teamEvaluation;
+
+    @Builder
+    public PeerEvaluation(Boolean isCompleted, Integer progress, String jointTask, Employee employee, Employee targetEmployee, TeamEvaluation teamEvaluation) {
+        this.isCompleted = isCompleted;
+        this.progress = progress;
+        this.jointTask = jointTask;
+        this.employee = employee;
+        this.targetEmployee = targetEmployee;
+        this.teamEvaluation = teamEvaluation;
+    }
+
+    public void completeEvaluation(int progress, String jointTask) {
+        this.isCompleted = true;
+        this.progress = progress;
+        this.jointTask = jointTask;
+    }
 }

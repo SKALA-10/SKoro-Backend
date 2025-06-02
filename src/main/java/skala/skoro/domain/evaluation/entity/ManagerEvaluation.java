@@ -7,7 +7,6 @@ import skala.skoro.domain.common.BaseEntity;
 @Entity
 @Table(name = "manager_evaluations")
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -34,4 +33,17 @@ public class ManagerEvaluation extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_evaluation_id")
     private TeamEvaluation teamEvaluation;
+
+
+    @Builder
+    public ManagerEvaluation(String report, Employee employee, Employee targetEmployee, TeamEvaluation teamEvaluation) {
+        this.report = report;
+        this.employee = employee;
+        this.targetEmployee = targetEmployee;
+        this.teamEvaluation = teamEvaluation;
+    }
+
+    public void updateReport(String report) {
+        this.report = report;
+    }
 }

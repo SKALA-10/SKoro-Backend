@@ -8,7 +8,6 @@ import skala.skoro.domain.common.BaseEntity;
 @Entity
 @Table(name = "task_summaries")
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -28,4 +27,15 @@ public class TaskSummary extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "period_id")
     private Period period;
+
+    @Builder
+    public TaskSummary(String taskSummary, Long taskId, Period period) {
+        this.taskSummary = taskSummary;
+        this.taskId = taskId;
+        this.period = period;
+    }
+
+    public void updateTaskSummary(String taskSummary) {
+        this.taskSummary = taskSummary;
+    }
 }
