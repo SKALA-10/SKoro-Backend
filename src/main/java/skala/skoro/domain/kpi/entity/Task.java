@@ -28,7 +28,10 @@ public class Task extends BaseEntity {
 
     private Integer progress;
 
-    private Integer achievementRate;
+    private String taskPerformance;
+
+    @Column(columnDefinition = "TEXT")
+    private String taskDetail;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private TeamKpi teamKpi;

@@ -22,6 +22,10 @@ public class Employee extends BaseEntity {
 
     private String profileImage;
 
+    private Integer cl;
+
+    private String position;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 

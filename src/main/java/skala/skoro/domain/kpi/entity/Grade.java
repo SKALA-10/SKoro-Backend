@@ -29,5 +29,8 @@ public class Grade extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private TeamKpi teamKpi;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Task task;
 }
 
