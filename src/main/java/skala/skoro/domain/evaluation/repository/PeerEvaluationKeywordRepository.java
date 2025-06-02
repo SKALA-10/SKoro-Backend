@@ -7,5 +7,5 @@ import skala.skoro.domain.evaluation.entity.PeerEvaluationKeyword;
 import java.util.List;
 
 public interface PeerEvaluationKeywordRepository extends JpaRepository<PeerEvaluationKeyword, Long> {
-    List<PeerEvaluationKeyword> findByPeerEvaluationId(PeerEvaluation peerEvaluation);
+    List<PeerEvaluationKeyword> findByPeerEvaluation(PeerEvaluation peerEvaluation);
 }
