@@ -4,8 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import skala.skoro.domain.evaluation.dto.PeerEvaluationDetailResponse;
+import skala.skoro.domain.evaluation.dto.PeerEvaluationStatusResponse;
 import skala.skoro.domain.evaluation.dto.SubmitPeerEvaluationRequest;
 import skala.skoro.domain.evaluation.service.PeerEvaluationService;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -13,6 +16,11 @@ import skala.skoro.domain.evaluation.service.PeerEvaluationService;
 public class PeerEvaluationController {
 
     private final PeerEvaluationService peerEvaluationService;
+
+    @GetMapping
+    public List<PeerEvaluationStatusResponse> getPeerEvaluationStatusList(@RequestParam String empNo, @RequestParam Long periodId) {
+        return peerEvaluationService.getPeerEvaluationStatusList(empNo, periodId);
+    }
 
     @GetMapping("/{peerEvaluationId}")
     public PeerEvaluationDetailResponse getDetail(@PathVariable Long peerEvaluationId) {
@@ -26,4 +34,5 @@ public class PeerEvaluationController {
         peerEvaluationService.submitPeerEvaluation(peerEvaluationId, request);
         return ResponseEntity.ok().build();
     }
+
 }

@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import skala.skoro.domain.employee.entity.Employee;
 import skala.skoro.domain.evaluation.dto.KeywordResponse;
 import skala.skoro.domain.evaluation.dto.PeerEvaluationDetailResponse;
+import skala.skoro.domain.evaluation.dto.PeerEvaluationStatusResponse;
 import skala.skoro.domain.evaluation.dto.SubmitPeerEvaluationRequest;
 import skala.skoro.domain.evaluation.entity.Keyword;
 import skala.skoro.domain.evaluation.entity.PeerEvaluation;
@@ -96,5 +97,20 @@ public class PeerEvaluationService {
                         .build());
             }
         }
+    }
+
+    @Transactional(readOnly = true)
+    public List<PeerEvaluationStatusResponse> getPeerEvaluationStatusList(String empNo, Long periodId) {
+        List<PeerEvaluation> evaluations = peerEvaluationRepository.findByEmployee_EmpNoAndTeamEvaluation_Period_Id(empNo, periodId);
+
+        return evaluations.stream()
+                .map(e -> PeerEvaluationStatusResponse.builder()
+                        .peerEvaluationId(e.getId())
+                        .targetEmpNo(e.getTargetEmployee().getEmpNo())
+                        .targetEmpName(e.getTargetEmployee().getEmpName())
+                        .targetEmpProfileImage(e.getTargetEmployee().getProfileImage())
+                        .completed(Boolean.TRUE.equals(e.getIsCompleted()))
+                        .build())
+                .toList();
     }
 }
