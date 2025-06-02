@@ -13,11 +13,11 @@ import skala.skoro.domain.common.BaseEntity;
 public class EvaluationFeedbackSummary extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "team_evaluation_id")
     private Long teamEvaluationId; // PK, FK
 
     @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
     @JoinColumn(name = "team_evaluation_id", insertable = false, updatable = false)
     private TeamEvaluation teamEvaluation;
 
