@@ -1,0 +1,29 @@
+package skala.skoro.domain.kpi.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+import skala.skoro.domain.common.BaseEntity;
+import skala.skoro.domain.employee.entity.Team;
+
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
+@Entity
+@Table(name = "team_kpis")
+public class TeamKpi extends BaseEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private Integer year;
+
+    private String kpiName;
+
+    private String kpiDescription;
+
+    private Integer progress;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Team team;
+}
