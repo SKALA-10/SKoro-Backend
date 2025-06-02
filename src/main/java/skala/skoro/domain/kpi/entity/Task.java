@@ -4,15 +4,14 @@ import jakarta.persistence.*;
 import lombok.*;
 import skala.skoro.domain.common.BaseEntity;
 import skala.skoro.domain.employee.entity.Employee;
-
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "tasks")
 public class Task extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +23,7 @@ public class Task extends BaseEntity {
 
     private String taskName;
 
-    @Lob
+    @Column(columnDefinition = "TEXT")
     private String targetLevel;
 
     private Integer progress;

@@ -9,6 +9,7 @@ import skala.skoro.domain.common.BaseEntity;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "grades")
 public class Grade extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

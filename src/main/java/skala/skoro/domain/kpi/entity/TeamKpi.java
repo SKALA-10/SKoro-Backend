@@ -10,6 +10,7 @@ import skala.skoro.domain.employee.entity.Team;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "team_kpis")
 public class TeamKpi extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

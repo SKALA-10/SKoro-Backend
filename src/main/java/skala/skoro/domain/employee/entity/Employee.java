@@ -9,6 +9,7 @@ import skala.skoro.domain.common.BaseEntity;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "employees")
 public class Employee extends BaseEntity {
     @Id
     private String empNo;

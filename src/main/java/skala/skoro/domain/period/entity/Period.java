@@ -1,9 +1,6 @@
 package skala.skoro.domain.period.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import skala.skoro.domain.common.BaseEntity;
 
@@ -12,6 +9,7 @@ import skala.skoro.domain.common.BaseEntity;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "periods")
 public class Period extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

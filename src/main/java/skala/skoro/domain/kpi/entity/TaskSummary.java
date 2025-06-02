@@ -10,6 +10,7 @@ import skala.skoro.domain.period.entity.Period;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "task_summaries")
 public class TaskSummary extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
