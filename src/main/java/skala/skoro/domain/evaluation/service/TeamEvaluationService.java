@@ -27,9 +27,12 @@ public class TeamEvaluationService {
 
         Employee employee = employeeService.findEmployeeByEmpNo(empNo);
 
-        TeamEvaluation teamEvaluation = teamEvaluationRepository.findByTeamAndPeriodId(employee.getTeam(), periodId)
-                .orElseThrow(() -> new CustomException(TEAM_EVALUATION_DOES_NOT_EXIST));
-
-        return TeamEvaluationReportResponse.from(teamEvaluation);
+        return TeamEvaluationReportResponse.from(findByEmployeeAndPeriodId(employee, periodId));
     }
+
+    public TeamEvaluation findByEmployeeAndPeriodId(Employee employee, Long periodId) {
+        return teamEvaluationRepository.findByTeamAndPeriodId(employee.getTeam(), periodId)
+                .orElseThrow(() -> new CustomException(TEAM_EVALUATION_DOES_NOT_EXIST));
+    }
+
 }
