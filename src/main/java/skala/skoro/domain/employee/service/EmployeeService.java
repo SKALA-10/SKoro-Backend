@@ -13,8 +13,8 @@ import skala.skoro.domain.evaluation.entity.TeamEvaluation;
 import skala.skoro.domain.evaluation.repository.FeedbackReportRepository;
 import skala.skoro.domain.evaluation.repository.FinalEvaluationReportRepository;
 import skala.skoro.domain.evaluation.repository.TeamEvaluationRepository;
-import skala.skoro.domain.period.entity.Period;
 import skala.skoro.domain.period.repository.PeriodRepository;
+import skala.skoro.domain.period.service.PeriodService;
 import skala.skoro.global.exception.CustomException;
 import java.util.List;
 
@@ -24,6 +24,8 @@ import static skala.skoro.global.exception.ErrorCode.*;
 @Transactional
 @RequiredArgsConstructor
 public class EmployeeService {
+
+    private final PeriodService periodService;
 
     private final EmployeeRepository employeeRepository;
 
@@ -50,7 +52,7 @@ public class EmployeeService {
     public List<EmployeeFinalEvaluationResponse> getFinalEmployeeEvaluationsByPeriod(Long periodId) {
         String empNo = "E001"; // TODO
 
-        if (!findPeriodById(periodId).getIsFinal()) {
+        if (!periodService.isFinal(periodId)) {
             throw new CustomException(INVALID_FINAL_EVALUATION_REQUEST);
         }
 
@@ -67,7 +69,7 @@ public class EmployeeService {
     public List<EmployeeNonFinalEvaluationResponse> getNonFinalEmployeeEvaluationsByPeriod(Long periodId) {
         String empNo = "E001"; // TODO
 
-        if (findPeriodById(periodId).getIsFinal()) {
+        if (periodService.isFinal(periodId)) {
             throw new CustomException(INVALID_NON_FINAL_EVALUATION_REQUEST);
         }
 
@@ -90,8 +92,5 @@ public class EmployeeService {
                 .orElseThrow(() -> new CustomException(TEAM_EVALUATION_DOES_NOT_EXIST));
     }
 
-    private Period findPeriodById(Long periodId){
-        return periodRepository.findById(periodId)
-                .orElseThrow(() -> new CustomException(PERIOD_DOES_NOT_EXIST));
-    }
+
 }
