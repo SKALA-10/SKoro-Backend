@@ -35,6 +35,7 @@ public class EmployeeService {
 
     private final PeriodRepository periodRepository;
 
+    @Transactional(readOnly = true)
     public List<EmployeeSummaryResponse> getEmployeesByTeam() {
         String empNo = "E001"; // TODO
 
@@ -45,6 +46,7 @@ public class EmployeeService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     public List<EmployeeFinalEvaluationResponse> getFinalEmployeeEvaluationsByPeriod(Long periodId) {
         String empNo = "E001"; // TODO
 
@@ -61,6 +63,7 @@ public class EmployeeService {
                     .toList();
     }
 
+    @Transactional(readOnly = true)
     public List<EmployeeNonFinalEvaluationResponse> getNonFinalEmployeeEvaluationsByPeriod(Long periodId) {
         String empNo = "E001"; // TODO
 
@@ -77,7 +80,7 @@ public class EmployeeService {
                 .toList();
     }
 
-    private Employee findEmployeeByEmpNo(String empNo){
+    public Employee findEmployeeByEmpNo(String empNo){
          return employeeRepository.findById(empNo)
                 .orElseThrow(() -> new CustomException(USER_NOT_FOUND));
     }
