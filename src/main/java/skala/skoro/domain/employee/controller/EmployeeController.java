@@ -10,7 +10,6 @@ import skala.skoro.domain.employee.dto.EmployeeFinalEvaluationResponse;
 import skala.skoro.domain.employee.dto.EmployeeNonFinalEvaluationResponse;
 import skala.skoro.domain.employee.dto.EmployeeSummaryResponse;
 import skala.skoro.domain.employee.service.EmployeeService;
-
 import java.util.List;
 
 @RequestMapping("/employees")

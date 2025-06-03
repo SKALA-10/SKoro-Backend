@@ -8,7 +8,6 @@ import skala.skoro.domain.evaluation.dto.PeerEvaluationDetailResponse;
 import skala.skoro.domain.evaluation.dto.PeerEvaluationStatusResponse;
 import skala.skoro.domain.evaluation.dto.SubmitPeerEvaluationRequest;
 import skala.skoro.domain.evaluation.service.PeerEvaluationService;
-
 import java.util.List;
 
 @RestController

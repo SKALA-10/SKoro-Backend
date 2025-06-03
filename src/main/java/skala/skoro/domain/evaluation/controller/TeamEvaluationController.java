@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import skala.skoro.domain.evaluation.dto.TeamEvaluationReportResponse;
 import skala.skoro.domain.evaluation.service.TeamEvaluationService;
 
-import java.util.List;
-
 @RequestMapping("/team-evaluation")
 @RequiredArgsConstructor
 @RestController

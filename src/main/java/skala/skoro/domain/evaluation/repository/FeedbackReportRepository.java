@@ -4,8 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import skala.skoro.domain.employee.entity.Employee;
 import skala.skoro.domain.evaluation.entity.FeedbackReport;
 import skala.skoro.domain.evaluation.entity.TeamEvaluation;
-
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 

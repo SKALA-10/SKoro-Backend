@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import skala.skoro.domain.evaluation.entity.FeedbackReport;
-import skala.skoro.domain.evaluation.entity.FinalEvaluationReport;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
