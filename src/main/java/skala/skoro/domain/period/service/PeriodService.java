@@ -52,4 +52,13 @@ public class PeriodService {
                 .map(TeamEvaluationPeriodResponse::from)
                 .toList();
     }
+
+    public boolean isFinal(Long periodId) {
+        return findPeriodById(periodId).getIsFinal();
+    }
+
+    private Period findPeriodById(Long periodId){
+        return periodRepository.findById(periodId)
+                .orElseThrow(() -> new CustomException(PERIOD_DOES_NOT_EXIST));
+    }
 }
