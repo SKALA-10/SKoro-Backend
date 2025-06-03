@@ -27,7 +27,7 @@ public class FeedbackReportService {
         Employee employee = employeeService.findEmployeeByEmpNo(empNo);
 
         return feedbackReportRepository.findByTeamEvaluationAndEmployee(
-                teamEvaluationService.findByEmployeeAndPeriodId(employee, periodId), employee)
+                teamEvaluationService.findTeamEvaluationByEmployeeAndPeriodId(employee, periodId), employee)
                 .map(FeedbackReportResponse::from)
                 .orElseThrow(() -> new CustomException(FEEDBACK_REPORT_DOES_NOT_EXIST));
     }
