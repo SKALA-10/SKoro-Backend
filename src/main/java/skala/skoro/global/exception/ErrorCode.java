@@ -12,6 +12,7 @@ public enum ErrorCode {
     TEAM_EVALUATION_DOES_NOT_EXIST(HttpStatus.NOT_FOUND, "요청한 teamId 또는 periodId에 해당하는 팀 평가가 존재하지 않습니다."),
     INVALID_FINAL_EVALUATION_REQUEST(HttpStatus.BAD_REQUEST, "요청한 평가가 최종 평가가 아닙니다."),
     INVALID_NON_FINAL_EVALUATION_REQUEST(HttpStatus.BAD_REQUEST, "요청한 평가가 비최종 평가가 아닙니다."),
+    EVALUATION_FEEDBACK_SUMMARY_DOES_NOT_EXIST(HttpStatus.NOT_FOUND, "요청에 해당하는 평가 피드백 요약이 존재하지 않습니다."),
     ;
 
     private final HttpStatus httpStatus;

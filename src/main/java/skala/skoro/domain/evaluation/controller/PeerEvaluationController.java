@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/peer-evaluation")
+@RequestMapping("/peer-evaluation")
 public class PeerEvaluationController {
 
     private final PeerEvaluationService peerEvaluationService;
