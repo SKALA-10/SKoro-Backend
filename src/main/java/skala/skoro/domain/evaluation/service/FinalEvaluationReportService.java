@@ -23,15 +23,23 @@ public class FinalEvaluationReportService {
 
     private final FinalEvaluationReportRepository finalEvaluationReportRepository;
 
-    private final TeamEvaluationRepository teamEvaluationRepository;
+    private final TeamEvaluationService teamEvaluationService;
 
     @Transactional(readOnly = true)
-    public FinalEvaluationReportResponse getFinalEvaluationReport(String empNo, Long periodId) {
+    public FinalEvaluationReportResponse getTeamMemberFinalEvaluationReport(String empNo, Long periodId) {
+        return getFinalEvaluationReportInternal(empNo, periodId);
+    }
+
+    @Transactional(readOnly = true)
+    public FinalEvaluationReportResponse getFinalEvaluationReport(Long periodId) {
+        String empNo = "E001"; // TODO
+        return getFinalEvaluationReportInternal(empNo, periodId);
+    }
+
+    private FinalEvaluationReportResponse getFinalEvaluationReportInternal(String empNo, Long periodId) {
         Employee employee = employeeService.findEmployeeByEmpNo(empNo);
 
-        TeamEvaluation teamEvaluation = teamEvaluationRepository
-                .findByTeamAndPeriodId(employee.getTeam(), periodId)
-                .orElseThrow(() -> new CustomException(TEAM_EVALUATION_DOES_NOT_EXIST));
+        TeamEvaluation teamEvaluation = teamEvaluationService.findTeamEvaluationByEmployeeAndPeriodId(employee, periodId);
 
         return finalEvaluationReportRepository
                 .findByTeamEvaluationAndEmployee(teamEvaluation, employee)
