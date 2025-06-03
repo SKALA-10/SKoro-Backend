@@ -7,5 +7,5 @@ import java.util.Collection;
 import java.util.List;
 
 public interface FeedbackReportRepository extends JpaRepository<FeedbackReport, Long> {
-    List<FeedbackReport> findByTeamEvaluationId(Long teamEvaluationId);
+    List<FeedbackReport> findByTeamEvaluationIdOrderByRankingAsc(Long teamEvaluationId);
 }
