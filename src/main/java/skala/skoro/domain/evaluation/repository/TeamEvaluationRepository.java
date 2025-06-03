@@ -8,4 +8,6 @@ import java.util.Optional;
 
 public interface TeamEvaluationRepository extends JpaRepository<TeamEvaluation, Long> {
     Optional<TeamEvaluation> findByTeamAndPeriodId(Team team, Long periodId);
+
+    Optional<TeamEvaluation> findByPeriodIdAndTeam(Long periodId, Team team);
 }
