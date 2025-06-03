@@ -1,8 +1,9 @@
 package skala.skoro.domain.period.service;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import skala.skoro.domain.period.dto.TeamEvaluationPeriodResponse;
 import skala.skoro.domain.period.dto.PeriodAvailableResponse;
 import skala.skoro.domain.period.dto.PeriodCreateAndUpdateRequest;
 import skala.skoro.domain.period.entity.Period;
@@ -30,7 +31,7 @@ public class PeriodService {
         periodRepository.save(Period.of(request, lastOrderInYear + 1));
     }
 
-    @org.springframework.transaction.annotation.Transactional(readOnly = true)
+    @Transactional(readOnly = true)
     public List<PeriodAvailableResponse> findPeriodAvailable() {
         return periodRepository.findUpcomingOrOngoingPeriods(LocalDate.now()).stream()
                 .map(PeriodAvailableResponse::from)
@@ -42,5 +43,13 @@ public class PeriodService {
                 .orElseThrow(() -> new CustomException(PERIOD_DOES_NOT_EXIST));
 
         period.updatePeriod(request);
+    }
+
+    public List<TeamEvaluationPeriodResponse> getTeamEvaluationPeriods() {
+        String empNo = "E001"; // TODO
+
+        return periodRepository.findPeriodsByEmpNo(empNo).stream()
+                .map(TeamEvaluationPeriodResponse::from)
+                .toList();
     }
 }

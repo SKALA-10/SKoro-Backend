@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import skala.skoro.domain.period.dto.PeriodAvailableResponse;
 import skala.skoro.domain.period.dto.PeriodCreateAndUpdateRequest;
 import skala.skoro.domain.period.service.PeriodService;
+import java.util.List;
 
 @RequestMapping("/admin")
 @RequiredArgsConstructor
@@ -22,7 +24,7 @@ public class AdminController {
     }
 
     @GetMapping("/period/available")
-    public ResponseEntity<?> findPeriodsAvailable() {
+    public ResponseEntity<List<PeriodAvailableResponse>> findPeriodsAvailable() {
         return ResponseEntity.ok(periodService.findPeriodAvailable());
     }
 

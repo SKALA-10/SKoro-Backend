@@ -15,11 +15,22 @@ public interface PeriodRepository extends JpaRepository<Period, Long> {
 
     // 현재 진행 중이거나 다가올 평가 기간이 있는지 확인
     @Query("""
-        SELECT p FROM Period p
+        SELECT p
+        FROM Period p
         WHERE p.startDate >= :today
         OR (p.startDate <= :today AND p.endDate >= :today)
         ORDER BY p.startDate ASC
         """)
     List<Period> findUpcomingOrOngoingPeriods(@Param("today") LocalDate today);
 
+    // 사번으로 해당 팀의 팀 평가가 있었던 기간 조회
+    @Query("""
+        SELECT te.period
+        FROM Employee e
+        JOIN e.team t
+        JOIN TeamEvaluation te ON te.team = t
+        WHERE e.empNo = :empNo
+        ORDER BY te.period.year DESC, te.period.orderInYear ASC
+    """)
+    List<Period> findPeriodsByEmpNo(@Param("empNo") String empNo);
 }
