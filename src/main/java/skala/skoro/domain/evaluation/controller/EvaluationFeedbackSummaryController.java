@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import skala.skoro.domain.evaluation.dto.EvaluationFeedbackSummaryResponse;
-import skala.skoro.domain.evaluation.entity.EvaluationFeedbackSummary;
 import skala.skoro.domain.evaluation.service.EvaluationFeedbackSummaryService;
 
 @RequestMapping("/evaluation-feedback-summary")
