@@ -15,9 +15,14 @@ public class FinalEvaluationReportController {
     private final FinalEvaluationReportService finalEvaluationReportService;
 
     @GetMapping("/employees/{empNo}/final-evaluation-report/{periodId}")
-    public ResponseEntity<FinalEvaluationReportResponse> getFinalEvaluationReport(
+    public ResponseEntity<FinalEvaluationReportResponse> getTeamMemberFinalEvaluationReport(
             @PathVariable String empNo,
             @PathVariable Long periodId) {
-        return ResponseEntity.ok(finalEvaluationReportService.getFinalEvaluationReport(empNo, periodId));
+        return ResponseEntity.ok(finalEvaluationReportService.getTeamMemberFinalEvaluationReport(empNo, periodId));
+    }
+
+    @GetMapping("/final-evaluation-report/{periodId}")
+    public ResponseEntity<FinalEvaluationReportResponse> getFinalEvaluationReport(@PathVariable Long periodId) {
+        return ResponseEntity.ok(finalEvaluationReportService.getFinalEvaluationReport(periodId));
     }
 }
