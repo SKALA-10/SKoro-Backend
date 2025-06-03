@@ -23,11 +23,21 @@ public class FeedbackReportService {
     private final FeedbackReportRepository feedbackReportRepository;
 
     @Transactional(readOnly = true)
-    public FeedbackReportResponse getFeedbackReport(String empNo, Long periodId) {
+    public FeedbackReportResponse getTeamMemberFeedbackReport(String empNo, Long periodId) {
+        return getFeedbackReportInternal(empNo, periodId);
+    }
+
+    @Transactional(readOnly = true)
+    public FeedbackReportResponse getFeedbackReport(Long periodId) {
+        String empNo = "E001"; // TODO
+        return getFeedbackReportInternal(empNo, periodId);
+    }
+
+    private FeedbackReportResponse getFeedbackReportInternal(String empNo, Long periodId) {
         Employee employee = employeeService.findEmployeeByEmpNo(empNo);
 
         return feedbackReportRepository.findByTeamEvaluationAndEmployee(
-                teamEvaluationService.findTeamEvaluationByEmployeeAndPeriodId(employee, periodId), employee)
+                        teamEvaluationService.findTeamEvaluationByEmployeeAndPeriodId(employee, periodId), employee)
                 .map(FeedbackReportResponse::from)
                 .orElseThrow(() -> new CustomException(FEEDBACK_REPORT_DOES_NOT_EXIST));
     }

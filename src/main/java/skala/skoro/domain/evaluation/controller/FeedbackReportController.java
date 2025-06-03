@@ -15,9 +15,14 @@ public class FeedbackReportController {
     private final FeedbackReportService feedbackReportService;
 
     @GetMapping("/employees/{empNo}/feedback-report/{periodId}")
-    public ResponseEntity<FeedbackReportResponse> getFeedbackReport(
+    public ResponseEntity<FeedbackReportResponse> getTeamMemberFeedbackReport(
             @PathVariable("empNo") String empNo,
             @PathVariable("periodId") Long periodId) {
-        return ResponseEntity.ok(feedbackReportService.getFeedbackReport(empNo, periodId));
+        return ResponseEntity.ok(feedbackReportService.getTeamMemberFeedbackReport(empNo, periodId));
+    }
+
+    @GetMapping("/feedback-report/{periodId}")
+    public ResponseEntity<FeedbackReportResponse> getFeedbackReport(@PathVariable("periodId") Long periodId) {
+        return ResponseEntity.ok(feedbackReportService.getFeedbackReport(periodId));
     }
 }
