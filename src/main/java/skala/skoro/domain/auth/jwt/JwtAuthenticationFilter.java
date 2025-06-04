@@ -10,7 +10,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import skala.skoro.domain.auth.repository.AccessTokenRepository;
 import skala.skoro.domain.auth.service.CustomUserDetailsService;
 
 import java.io.IOException;
@@ -21,7 +20,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtProvider jwtProvider;
     private final CustomUserDetailsService customUserDetailsService;
-    private final AccessTokenRepository accessTokenRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -29,24 +27,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String token = resolveToken(request);
 
+        // AccessToken은 오직 "JWT 유효성 검증"만!
         if (token != null && jwtProvider.validateToken(token)) {
-            // Redis에서 AccessToken 존재 여부 확인
-            boolean exists = accessTokenRepository.existsById(token);
-            if (exists) {
-                String empNo = jwtProvider.getEmpNo(token);
-                var userDetails = customUserDetailsService.loadUserByUsername(empNo);
+            String empNo = jwtProvider.getEmpNo(token);
+            var userDetails = customUserDetailsService.loadUserByUsername(empNo);
 
-                UsernamePasswordAuthenticationToken authentication =
-                        new UsernamePasswordAuthenticationToken(
-                                userDetails, null, userDetails.getAuthorities());
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-            }
+            UsernamePasswordAuthenticationToken authentication =
+                    new UsernamePasswordAuthenticationToken(
+                            userDetails, null, userDetails.getAuthorities());
+            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 
         filterChain.doFilter(request, response);
     }
-
 
     private String resolveToken(HttpServletRequest request) {
         String bearer = request.getHeader("Authorization");
