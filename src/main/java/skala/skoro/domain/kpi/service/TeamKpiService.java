@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import skala.skoro.domain.employee.entity.Employee;
 import skala.skoro.domain.employee.service.EmployeeService;
+import skala.skoro.domain.kpi.dto.EmployeeSimple;
 import skala.skoro.domain.kpi.dto.TeamKpiDetailResponse;
+import skala.skoro.domain.kpi.repository.TaskRepository;
 import skala.skoro.domain.kpi.repository.TeamKpiRepository;
 import java.time.LocalDate;
 import java.util.List;
@@ -19,13 +21,20 @@ public class TeamKpiService {
 
     private final TeamKpiRepository teamKpiRepository;
 
+    private final TaskRepository taskRepository;
+
     public List<TeamKpiDetailResponse> getTeamKpis() {
         String empNo = "E001"; // TODO
 
         Employee employee = employeeService.findEmployeeByEmpNo(empNo);
 
         return teamKpiRepository.findByTeamAndYearOrderByProgressDesc(employee.getTeam(), LocalDate.now().getYear()).stream()
-                .map(TeamKpiDetailResponse::from)
+                .map(kpi -> {
+                    List<EmployeeSimple> participants = taskRepository.findEmployeesByTeamKpiId(kpi.getId()).stream()
+                            .map(EmployeeSimple::from)
+                            .toList();
+                    return TeamKpiDetailResponse.of(kpi, participants);
+                })
                 .toList();
     }
 }
