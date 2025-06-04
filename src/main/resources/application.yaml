@@ -2,9 +2,9 @@ spring:
   profiles:
     active: local
   datasource:
-    url: ${MARIADB_URL}
-    username: ${MARIADB_USER}
-    password: ${MARIADB_PASSWORD}
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
     driver-class-name: org.mariadb.jdbc.Driver
 
   data:
@@ -13,6 +13,14 @@ spring:
       port: ${REDIS_PORT}
       username: ${REDIS_USERNAME}
       password: ${REDIS_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
+    show-sql: true
 
 server:
   servlet:
