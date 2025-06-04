@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import skala.skoro.domain.kpi.dto.TeamKpiDetailResponse;
 import skala.skoro.domain.kpi.service.TeamKpiService;
-
 import java.util.List;
 
 @RequestMapping("/team-kpis")

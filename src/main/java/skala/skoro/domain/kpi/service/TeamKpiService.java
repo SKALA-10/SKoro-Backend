@@ -7,7 +7,6 @@ import skala.skoro.domain.employee.entity.Employee;
 import skala.skoro.domain.employee.service.EmployeeService;
 import skala.skoro.domain.kpi.dto.TeamKpiDetailResponse;
 import skala.skoro.domain.kpi.repository.TeamKpiRepository;
-
 import java.time.LocalDate;
 import java.util.List;
 
