@@ -1,6 +1,7 @@
 package skala.skoro.domain.auth.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import skala.skoro.domain.auth.dto.*;
 import skala.skoro.domain.auth.entity.RefreshTokenEntry;
@@ -16,11 +17,15 @@ public class AuthService {
     private final EmployeeRepository employeeRepository;
     private final JwtProvider jwtProvider;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public LoginResponse login(LoginRequest loginRequest) {
         Employee employee = employeeRepository.findById(loginRequest.getEmpNo())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사번입니다."));
-        // TODO: 패스워드 체크 (생략 가능)
+
+        if (!passwordEncoder.matches(loginRequest.getPassword(), employee.getPassword())) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
 
         String accessToken = jwtProvider.generateAccessToken(employee.getEmpNo(), employee.getRole());
         String refreshToken = jwtProvider.generateRefreshToken(employee.getEmpNo());

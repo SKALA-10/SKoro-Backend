@@ -1,6 +1,7 @@
 package skala.skoro.domain.auth.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import skala.skoro.domain.auth.dto.LoginRequest;
@@ -11,13 +12,15 @@ import skala.skoro.domain.auth.service.AuthService;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/auth")
+@Slf4j
+@RequestMapping("/auth")
 public class AuthController {
 
     private final AuthService authService;
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+        log.info("Login request: {}", request);
         return ResponseEntity.ok(authService.login(request));
     }
 
