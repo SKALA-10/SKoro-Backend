@@ -3,10 +3,8 @@ package skala.skoro.domain.auth.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import skala.skoro.domain.auth.dto.*;
-import skala.skoro.domain.auth.entity.AccessTokenEntry;
 import skala.skoro.domain.auth.entity.RefreshTokenEntry;
 import skala.skoro.domain.auth.jwt.JwtProvider;
-import skala.skoro.domain.auth.repository.AccessTokenRepository;
 import skala.skoro.domain.auth.repository.RefreshTokenRepository;
 import skala.skoro.domain.employee.entity.Employee;
 import skala.skoro.domain.employee.repository.EmployeeRepository;
@@ -17,20 +15,17 @@ public class AuthService {
 
     private final EmployeeRepository employeeRepository;
     private final JwtProvider jwtProvider;
-    private final AccessTokenRepository accessTokenRepository;
     private final RefreshTokenRepository refreshTokenRepository;
 
     public LoginResponse login(LoginRequest loginRequest) {
         Employee employee = employeeRepository.findById(loginRequest.getEmpNo())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사번입니다."));
+        // TODO: 패스워드 체크 (생략 가능)
 
         String accessToken = jwtProvider.generateAccessToken(employee.getEmpNo(), employee.getRole());
-        accessTokenRepository.save(new AccessTokenEntry(accessToken, employee.getEmpNo()));
-
-        // 1. RefreshToken 발급
         String refreshToken = jwtProvider.generateRefreshToken(employee.getEmpNo());
 
-        // 2. DB 또는 Redis에 RefreshToken 저장 (upsert)
+        // RefreshToken만 Redis에 저장 (empNo 기준)
         refreshTokenRepository.save(new RefreshTokenEntry(employee.getEmpNo(), refreshToken));
 
         return LoginResponse.builder()
@@ -42,18 +37,16 @@ public class AuthService {
 
     public void logout(String authHeader) {
         String token = authHeader != null && authHeader.startsWith("Bearer ") ? authHeader.substring(7) : null;
-        if (token != null) {
-            accessTokenRepository.deleteById(token);
-        }
-
-        // AccessToken에서 empNo 찾기 (option)
         String empNo = null;
-        try { empNo = jwtProvider.getEmpNo(token); } catch (Exception ignore) {}
-        if (empNo != null) {
-            refreshTokenRepository.deleteById(empNo);
+        if (token != null) {
+            try { empNo = jwtProvider.getEmpNo(token); } catch (Exception ignore) {}
+            if (empNo != null) {
+                refreshTokenRepository.deleteById(empNo); // RefreshToken만 삭제
+            }
         }
     }
 
+    // RefreshToken으로 AccessToken 재발급
     public TokenResponse refreshToken(RefreshTokenRequest request) {
         String refreshToken = request.getRefreshToken();
 
@@ -77,15 +70,9 @@ public class AuthService {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사번입니다."));
         String newAccessToken = jwtProvider.generateAccessToken(empNo, employee.getRole());
 
-        // 5. 필요하다면 RefreshToken도 재발급 후 갱신
-        // String newRefreshToken = jwtProvider.generateRefreshToken(empNo);
-        // tokenInDb.setToken(newRefreshToken);
-        // refreshTokenRepository.save(tokenInDb);
-
         return TokenResponse.builder()
                 .accessToken(newAccessToken)
-                .refreshToken(refreshToken) // or newRefreshToken
+                .refreshToken(refreshToken) // 필요시 새로 발급해서 갱신도 가능
                 .build();
     }
-
 }
