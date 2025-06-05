@@ -13,7 +13,6 @@ import skala.skoro.domain.evaluation.entity.TeamEvaluation;
 import skala.skoro.domain.evaluation.repository.FeedbackReportRepository;
 import skala.skoro.domain.evaluation.repository.FinalEvaluationReportRepository;
 import skala.skoro.domain.evaluation.repository.TeamEvaluationRepository;
-import skala.skoro.domain.period.repository.PeriodRepository;
 import skala.skoro.domain.period.service.PeriodService;
 import skala.skoro.global.exception.CustomException;
 import java.util.List;
@@ -34,8 +33,6 @@ public class EmployeeService {
     private final FinalEvaluationReportRepository finalEvaluationReportRepository;
 
     private final FeedbackReportRepository feedbackReportRepository;
-
-    private final PeriodRepository periodRepository;
 
     @Transactional(readOnly = true)
     public List<EmployeeSummaryResponse> getEmployeesByTeam() {
@@ -90,6 +87,10 @@ public class EmployeeService {
     private TeamEvaluation findTeamEvaluationByTeamAndPeriod(Team team, Long periodId) {
         return teamEvaluationRepository.findByTeamAndPeriodId(team, periodId)
                 .orElseThrow(() -> new CustomException(TEAM_EVALUATION_DOES_NOT_EXIST));
+    }
+
+    public List<Employee> findByTeam(Team team) {
+        return employeeRepository.findByTeam(team);
     }
 
 
