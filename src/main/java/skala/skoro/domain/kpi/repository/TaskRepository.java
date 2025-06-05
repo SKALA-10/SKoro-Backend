@@ -26,6 +26,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     """)
     List<Task> findMyTasksThisYear(@Param("empNo") String empNo, @Param("year") int year);
 
-    // 같은 Task의 모든 팀원 emp_no 조회
-    List<Task> findByTaskId(Long taskId);
+    // 팀 내 동일 Task 조회
+    List<Task> findByTaskNameAndTeamKpi_Id(String taskName, Long teamKpiId);
 }

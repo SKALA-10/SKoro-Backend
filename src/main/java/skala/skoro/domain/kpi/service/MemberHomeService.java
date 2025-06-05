@@ -28,19 +28,19 @@ public class MemberHomeService {
         int thisYear = LocalDate.now().getYear();
         List<Task> myTasks = taskRepository.findMyTasksThisYear(empNo, thisYear);
 
-        // 각 Task별로 멤버 리스트 조립
         return myTasks.stream().map(task -> {
-            // 1. KPI명
             String kpiName = task.getTeamKpi().getKpiName();
 
-            // 2. 같은 task_id로 팀원 조회
-            List<Task> members = taskRepository.findByTaskId(task.getId());
+            // 1. 같은 업무(TaskName + KPI)로 팀원 조회
+            List<Task> members = taskRepository.findByTaskNameAndTeamKpi_Id(
+                    task.getTaskName(), task.getTeamKpi().getId()
+            );
             List<EmployeeSummaryResponse> memberDtos = members.stream().map(t -> {
-                var emp = employeeRepository.findById(t.getEmployee().getEmpNo()).orElse(null);
+                var emp = t.getEmployee();
                 return EmployeeSummaryResponse.builder()
-                        .empNo(t.getEmployee().getEmpNo())
-                        .empName(emp != null ? emp.getEmpName() : null)
-                        .profileImage(emp != null ? emp.getProfileImage() : null)
+                        .empNo(emp.getEmpNo())
+                        .empName(emp.getEmpName())
+                        .profileImage(emp.getProfileImage())
                         .build();
             }).toList();
 
