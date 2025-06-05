@@ -23,6 +23,7 @@ public class Period extends BaseEntity {
     private String periodName;
 
     @Builder.Default
+    @Enumerated(EnumType.STRING)
     private Unit unit = Unit.QUARTER;
 
     private Boolean isFinal;

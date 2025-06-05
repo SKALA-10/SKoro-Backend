@@ -19,6 +19,7 @@ public class TeamEvaluation {
     @Column(columnDefinition = "TEXT")
     private String report;
 
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     private Integer averageAchievementRate;
