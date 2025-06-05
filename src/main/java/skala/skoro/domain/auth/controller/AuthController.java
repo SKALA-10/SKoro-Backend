@@ -11,9 +11,9 @@ import skala.skoro.domain.auth.dto.TokenResponse;
 import skala.skoro.domain.auth.service.AuthService;
 
 @RestController
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 @Slf4j
-@RequestMapping("/auth")
 public class AuthController {
 
     private final AuthService authService;

@@ -35,9 +35,7 @@ public class EmployeeService {
     private final FeedbackReportRepository feedbackReportRepository;
 
     @Transactional(readOnly = true)
-    public List<EmployeeSummaryResponse> getEmployeesByTeam() {
-        String empNo = "E001"; // TODO
-
+    public List<EmployeeSummaryResponse> getEmployeesByTeam(String empNo) {
         Team team = findEmployeeByEmpNo(empNo).getTeam();
 
         return employeeRepository.findByTeam(team).stream()
@@ -46,9 +44,7 @@ public class EmployeeService {
     }
 
     @Transactional(readOnly = true)
-    public List<EmployeeFinalEvaluationResponse> getFinalEmployeeEvaluationsByPeriod(Long periodId) {
-        String empNo = "E001"; // TODO
-
+    public List<EmployeeFinalEvaluationResponse> getFinalEmployeeEvaluationsByPeriod(Long periodId, String empNo) {
         if (!periodService.isFinal(periodId)) {
             throw new CustomException(INVALID_FINAL_EVALUATION_REQUEST);
         }
@@ -63,9 +59,7 @@ public class EmployeeService {
     }
 
     @Transactional(readOnly = true)
-    public List<EmployeeNonFinalEvaluationResponse> getNonFinalEmployeeEvaluationsByPeriod(Long periodId) {
-        String empNo = "E001"; // TODO
-
+    public List<EmployeeNonFinalEvaluationResponse> getNonFinalEmployeeEvaluationsByPeriod(Long periodId, String empNo) {
         if (periodService.isFinal(periodId)) {
             throw new CustomException(INVALID_NON_FINAL_EVALUATION_REQUEST);
         }

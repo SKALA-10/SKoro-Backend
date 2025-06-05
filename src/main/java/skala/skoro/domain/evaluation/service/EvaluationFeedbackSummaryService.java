@@ -25,9 +25,7 @@ public class EvaluationFeedbackSummaryService {
     private final TeamEvaluationRepository teamEvaluationRepository;
 
     @Transactional(readOnly = true)
-    public EvaluationFeedbackSummaryResponse getEvaluationFeedbackSummaryByPeriodId(Long periodId) {
-        String empNo = "E001"; // TODO
-
+    public EvaluationFeedbackSummaryResponse getEvaluationFeedbackSummaryByPeriodId(Long periodId, String empNo) {
         Employee employee = employeeService.findEmployeeByEmpNo(empNo);
 
         return teamEvaluationRepository.findByTeamAndPeriodId(employee.getTeam(), periodId)

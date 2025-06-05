@@ -31,9 +31,7 @@ public class TeamEvaluationService {
     private final PeriodRepository periodRepository;
 
     @Transactional(readOnly = true)
-    public List<TeamEvaluationDetailResponse> findTeamEvaluationsByYear() {
-        String empNo = "E001"; // TODO
-
+    public List<TeamEvaluationDetailResponse> findTeamEvaluationsByYear(String empNo) {
         Employee employee = employeeService.findEmployeeByEmpNo(empNo);
 
         return periodRepository.findByYearOrderByOrderInYearDesc(LocalDate.now().getYear()).stream()
@@ -45,9 +43,7 @@ public class TeamEvaluationService {
     }
 
     @Transactional(readOnly = true)
-    public TeamEvaluationReportResponse getTeamEvaluationReportByPeriodId(Long periodId) {
-        String empNo = "E001"; // TODO
-
+    public TeamEvaluationReportResponse getTeamEvaluationReportByPeriodId(Long periodId, String empNo) {
         Employee employee = employeeService.findEmployeeByEmpNo(empNo);
 
         return TeamEvaluationReportResponse.from(findTeamEvaluationByEmployeeAndPeriodId(employee, periodId));
@@ -59,9 +55,7 @@ public class TeamEvaluationService {
     }
 
     @Transactional(readOnly = true)
-    public List<FinalEvaluationAchievementStatsResponse> getFinalTeamAndAllAverageAchievementRate() {
-        String empNo = "E001"; // TODO
-
+    public List<FinalEvaluationAchievementStatsResponse> getFinalTeamAndAllAverageAchievementRate(String empNo) {
         Employee employee = employeeService.findEmployeeByEmpNo(empNo);
 
         return teamEvaluationRepository.findTeamAndAllAverageByYear(employee.getTeam().getId()).stream()
@@ -69,9 +63,8 @@ public class TeamEvaluationService {
                 .toList();
     }
 
-    public TeamEvaluationStatusResponse getTeamEvaluationStatus() {
-        String empNo = "E001"; // TODO
-
+    @Transactional(readOnly = true)
+    public TeamEvaluationStatusResponse getTeamEvaluationStatus(String empNo) {
         Employee employee = employeeService.findEmployeeByEmpNo(empNo);
 
         LocalDate today = LocalDate.now();

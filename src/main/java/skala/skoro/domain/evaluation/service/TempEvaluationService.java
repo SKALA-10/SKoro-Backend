@@ -25,9 +25,8 @@ public class TempEvaluationService {
 
     private final TempEvaluationRepository redisRepository;
 
-    public List<TempEvaluationResponse> getTeamTempEvaluations() {
-        String empNo = "E001"; // TODO
-
+    @Transactional(readOnly = true)
+    public List<TempEvaluationResponse> getTeamTempEvaluations(String empNo) {
         Employee employee = employeeService.findEmployeeByEmpNo(empNo);
 
         List<Employee> teamMemberList = employeeService.findByTeam(employee.getTeam());

@@ -31,8 +31,7 @@ public class FinalEvaluationReportService {
     }
 
     @Transactional(readOnly = true)
-    public FinalEvaluationReportResponse getFinalEvaluationReport(Long periodId) {
-        String empNo = "E001"; // TODO
+    public FinalEvaluationReportResponse getFinalEvaluationReport(Long periodId, String empNo) {
         return getFinalEvaluationReportInternal(empNo, periodId);
     }
 
