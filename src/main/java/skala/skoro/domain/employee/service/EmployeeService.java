@@ -13,7 +13,6 @@ import skala.skoro.domain.evaluation.entity.TeamEvaluation;
 import skala.skoro.domain.evaluation.repository.FeedbackReportRepository;
 import skala.skoro.domain.evaluation.repository.FinalEvaluationReportRepository;
 import skala.skoro.domain.evaluation.repository.TeamEvaluationRepository;
-import skala.skoro.domain.period.repository.PeriodRepository;
 import skala.skoro.domain.period.service.PeriodService;
 import skala.skoro.global.exception.CustomException;
 import java.util.List;
