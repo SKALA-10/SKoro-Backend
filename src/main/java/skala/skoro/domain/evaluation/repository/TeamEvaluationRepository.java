@@ -5,7 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import skala.skoro.domain.employee.entity.Team;
 import skala.skoro.domain.evaluation.entity.TeamEvaluation;
+import skala.skoro.domain.period.entity.Period;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,4 +27,6 @@ public interface TeamEvaluationRepository extends JpaRepository<TeamEvaluation, 
         ORDER BY p.year DESC
     """, nativeQuery = true)
     List<Object[]> findTeamAndAllAverageByYear(@Param("teamId") Long teamId);
+
+    Optional<TeamEvaluation> findByTeamAndPeriod(Team team, Period period);
 }

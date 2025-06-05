@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import skala.skoro.domain.evaluation.dto.FinalEvaluationAchievementStatsResponse;
+import skala.skoro.domain.evaluation.dto.TeamEvaluationDetailResponse;
 import skala.skoro.domain.evaluation.dto.TeamEvaluationReportResponse;
 import skala.skoro.domain.evaluation.service.TeamEvaluationService;
 
@@ -18,6 +19,11 @@ import java.util.List;
 public class TeamEvaluationController {
 
     private final TeamEvaluationService teamEvaluationService;
+
+    @GetMapping
+    public ResponseEntity<List<TeamEvaluationDetailResponse>> findTeamEvaluationsByYear() {
+        return ResponseEntity.ok(teamEvaluationService.findTeamEvaluationsByYear());
+    }
 
     @GetMapping("/report/{periodId}")
     public ResponseEntity<TeamEvaluationReportResponse> getTeamEvaluationReport(@PathVariable Long periodId){
