@@ -33,4 +33,6 @@ public interface PeriodRepository extends JpaRepository<Period, Long> {
         ORDER BY te.period.year DESC, te.period.orderInYear ASC
     """)
     List<Period> findPeriodsByEmpNo(@Param("empNo") String empNo);
+
+    List<Period> findByYearOrderByOrderInYearDesc(int year);
 }
