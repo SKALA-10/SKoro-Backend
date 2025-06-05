@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import skala.skoro.domain.employee.dto.EmployeeSummaryResponse;
 import skala.skoro.domain.employee.repository.EmployeeRepository;
+import skala.skoro.domain.evaluation.repository.FeedbackReportRepository;
+import skala.skoro.domain.kpi.dto.MyContributionResponse;
 import skala.skoro.domain.kpi.dto.MyTaskResponse;
 import skala.skoro.domain.kpi.entity.Task;
 import skala.skoro.domain.kpi.repository.TaskRepository;
@@ -17,6 +19,7 @@ public class MemberHomeService {
 
     private final TaskRepository taskRepository;
     private final EmployeeRepository employeeRepository;
+    private final FeedbackReportRepository feedbackReportRepository;
 
     public List<MyTaskResponse> getMyTasks(String empNo) {
         int thisYear = LocalDate.now().getYear();
@@ -48,5 +51,9 @@ public class MemberHomeService {
                     .teamMembers(memberDtos)
                     .build();
         }).toList();
+    }
+
+    public List<MyContributionResponse> getMyContributions(String empNo) {
+        return feedbackReportRepository.findContributionByEmpNoGrouped(empNo);
     }
 }
