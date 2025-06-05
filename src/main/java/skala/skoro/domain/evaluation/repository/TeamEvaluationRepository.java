@@ -6,8 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import skala.skoro.domain.employee.entity.Team;
 import skala.skoro.domain.evaluation.entity.TeamEvaluation;
 import skala.skoro.domain.period.entity.Period;
-
-import java.util.Collection;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,4 +28,7 @@ public interface TeamEvaluationRepository extends JpaRepository<TeamEvaluation, 
     List<Object[]> findTeamAndAllAverageByYear(@Param("teamId") Long teamId);
 
     Optional<TeamEvaluation> findByTeamAndPeriod(Team team, Period period);
+
+    // 평가 기간 중인 팀 평가를 조회
+    Optional<TeamEvaluation> findByTeamAndPeriod_StartDateLessThanEqualAndPeriod_EndDateGreaterThanEqual(Team team, LocalDate date1, LocalDate date2);
 }

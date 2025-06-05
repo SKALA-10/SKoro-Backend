@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import skala.skoro.domain.evaluation.dto.FinalEvaluationAchievementStatsResponse;
 import skala.skoro.domain.evaluation.dto.TeamEvaluationDetailResponse;
 import skala.skoro.domain.evaluation.dto.TeamEvaluationReportResponse;
+import skala.skoro.domain.evaluation.dto.TeamEvaluationStatusResponse;
 import skala.skoro.domain.evaluation.service.TeamEvaluationService;
 
 import java.util.List;
@@ -34,5 +35,10 @@ public class TeamEvaluationController {
     @GetMapping("/average-achievement-rate")
     public ResponseEntity<List<FinalEvaluationAchievementStatsResponse>> getFinalTeamEvaluationAverageAchievementRate(){
         return ResponseEntity.ok(teamEvaluationService.getFinalTeamAndAllAverageAchievementRate());
+    }
+
+    @GetMapping("/status")
+    public ResponseEntity<TeamEvaluationStatusResponse> getTeamEvaluationStatus(){
+        return ResponseEntity.ok(teamEvaluationService.getTeamEvaluationStatus());
     }
 }

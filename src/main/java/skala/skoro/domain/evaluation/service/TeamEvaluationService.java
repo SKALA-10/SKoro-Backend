@@ -8,6 +8,7 @@ import skala.skoro.domain.employee.service.EmployeeService;
 import skala.skoro.domain.evaluation.dto.FinalEvaluationAchievementStatsResponse;
 import skala.skoro.domain.evaluation.dto.TeamEvaluationDetailResponse;
 import skala.skoro.domain.evaluation.dto.TeamEvaluationReportResponse;
+import skala.skoro.domain.evaluation.dto.TeamEvaluationStatusResponse;
 import skala.skoro.domain.evaluation.entity.TeamEvaluation;
 import skala.skoro.domain.evaluation.repository.TeamEvaluationRepository;
 import skala.skoro.domain.period.repository.PeriodRepository;
@@ -59,12 +60,24 @@ public class TeamEvaluationService {
 
     @Transactional(readOnly = true)
     public List<FinalEvaluationAchievementStatsResponse> getFinalTeamAndAllAverageAchievementRate() {
-        String empNo = "E001";
+        String empNo = "E001"; // TODO
 
         Employee employee = employeeService.findEmployeeByEmpNo(empNo);
 
         return teamEvaluationRepository.findTeamAndAllAverageByYear(employee.getTeam().getId()).stream()
                 .map(FinalEvaluationAchievementStatsResponse::from)
                 .toList();
+    }
+
+    public TeamEvaluationStatusResponse getTeamEvaluationStatus() {
+        String empNo = "E001"; // TODO
+
+        Employee employee = employeeService.findEmployeeByEmpNo(empNo);
+
+        LocalDate today = LocalDate.now();
+
+        return teamEvaluationRepository.findByTeamAndPeriod_StartDateLessThanEqualAndPeriod_EndDateGreaterThanEqual(employee.getTeam(), today, today)
+                .map(TeamEvaluationStatusResponse::from)
+                .orElseThrow(() -> new CustomException(TEAM_EVALUATION_DOES_NOT_EXIST));
     }
 }
