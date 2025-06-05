@@ -92,5 +92,9 @@ public class EmployeeService {
                 .orElseThrow(() -> new CustomException(TEAM_EVALUATION_DOES_NOT_EXIST));
     }
 
+    public List<Employee> findByTeam(Team team) {
+        return employeeRepository.findByTeam(team);
+    }
+
 
 }
