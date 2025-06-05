@@ -23,9 +23,8 @@ public class TeamKpiService {
 
     private final TaskRepository taskRepository;
 
-    public List<TeamKpiDetailResponse> getTeamKpis() {
-        String empNo = "E001"; // TODO
-
+    @Transactional(readOnly = true)
+    public List<TeamKpiDetailResponse> getTeamKpis(String empNo) {
         Employee employee = employeeService.findEmployeeByEmpNo(empNo);
 
         return teamKpiRepository.findByTeamAndYearOrderByProgressDesc(employee.getTeam(), LocalDate.now().getYear()).stream()

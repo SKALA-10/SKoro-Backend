@@ -9,9 +9,9 @@ import skala.skoro.domain.period.dto.PeriodCreateAndUpdateRequest;
 import skala.skoro.domain.period.service.PeriodService;
 import java.util.List;
 
+@RestController
 @RequestMapping("/admin")
 @RequiredArgsConstructor
-@RestController
 public class AdminController {
 
     private final PeriodService periodService;

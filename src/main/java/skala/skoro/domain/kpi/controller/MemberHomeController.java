@@ -14,8 +14,8 @@ import skala.skoro.domain.kpi.service.MemberHomeService;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/member/home")
+@RequiredArgsConstructor
 public class MemberHomeController {
 
     private final MemberHomeService memberHomeService;

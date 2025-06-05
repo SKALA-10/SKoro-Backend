@@ -28,8 +28,7 @@ public class FeedbackReportService {
     }
 
     @Transactional(readOnly = true)
-    public FeedbackReportResponse getFeedbackReport(Long periodId) {
-        String empNo = "E001"; // TODO
+    public FeedbackReportResponse getFeedbackReport(Long periodId, String empNo) {
         return getFeedbackReportInternal(empNo, periodId);
     }
 

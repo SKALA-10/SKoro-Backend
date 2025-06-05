@@ -45,9 +45,8 @@ public class PeriodService {
         period.updatePeriod(request);
     }
 
-    public List<TeamEvaluationPeriodResponse> getTeamEvaluationPeriods() {
-        String empNo = "E001"; // TODO
-
+    @Transactional(readOnly = true)
+    public List<TeamEvaluationPeriodResponse> getTeamEvaluationPeriods(String empNo) {
         return periodRepository.findPeriodsByEmpNo(empNo).stream()
                 .map(TeamEvaluationPeriodResponse::from)
                 .toList();

@@ -11,8 +11,8 @@ import skala.skoro.domain.evaluation.service.PeerEvaluationService;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/peer-evaluation")
+@RequiredArgsConstructor
 public class PeerEvaluationController {
 
     private final PeerEvaluationService peerEvaluationService;
