@@ -8,11 +8,8 @@ import skala.skoro.domain.employee.service.EmployeeService;
 import skala.skoro.domain.evaluation.dto.FinalEvaluationReportResponse;
 import skala.skoro.domain.evaluation.entity.TeamEvaluation;
 import skala.skoro.domain.evaluation.repository.FinalEvaluationReportRepository;
-import skala.skoro.domain.evaluation.repository.TeamEvaluationRepository;
 import skala.skoro.global.exception.CustomException;
-
 import static skala.skoro.global.exception.ErrorCode.FINAL_EVALUATION_REPORT_DOES_NOT_EXIST;
-import static skala.skoro.global.exception.ErrorCode.TEAM_EVALUATION_DOES_NOT_EXIST;
 
 @Service
 @Transactional
