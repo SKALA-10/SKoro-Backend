@@ -35,8 +35,6 @@ public class EmployeeService {
 
     private final FeedbackReportRepository feedbackReportRepository;
 
-    private final PeriodRepository periodRepository;
-
     @Transactional(readOnly = true)
     public List<EmployeeSummaryResponse> getEmployeesByTeam() {
         String empNo = "E001"; // TODO
