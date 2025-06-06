@@ -15,6 +15,7 @@ import java.time.LocalDate;
 public class Task extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "task_id")
     private Long id;
 
     private LocalDate startDate;
@@ -34,8 +35,10 @@ public class Task extends BaseEntity {
     private String taskDetail;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_kpi_id")
     private TeamKpi teamKpi;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "emp_no")
     private Employee employee;
 }

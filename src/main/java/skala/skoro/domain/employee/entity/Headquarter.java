@@ -13,10 +13,12 @@ import skala.skoro.domain.common.BaseEntity;
 public class Headquarter extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "headquarter_id")
     private Long id;
 
     private String headquarterName;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "part_id")
     private Part part;
 }

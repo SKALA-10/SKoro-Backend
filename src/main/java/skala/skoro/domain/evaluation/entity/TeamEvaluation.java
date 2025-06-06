@@ -14,6 +14,7 @@ import skala.skoro.domain.period.entity.Period;
 public class TeamEvaluation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "team_evaluation_id")
     private Long id;
 
     @Column(columnDefinition = "TEXT")
@@ -32,8 +33,10 @@ public class TeamEvaluation {
     private String teamPerformanceSummary;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_id")
     private Team team;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "period_id")
     private Period period;
 }

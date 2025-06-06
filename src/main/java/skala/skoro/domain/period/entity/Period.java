@@ -16,6 +16,7 @@ import java.time.LocalDate;
 public class Period extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "period_id")
     private Long id;
 
     private Integer year;
