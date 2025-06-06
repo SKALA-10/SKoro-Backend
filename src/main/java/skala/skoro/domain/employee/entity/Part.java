@@ -13,6 +13,7 @@ import skala.skoro.domain.common.BaseEntity;
 public class Part extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "part_id")
     private Long id;
 
     private String partName;

@@ -30,5 +30,6 @@ public class Employee extends BaseEntity {
     private Role role;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_id")
     private Team team;
 }

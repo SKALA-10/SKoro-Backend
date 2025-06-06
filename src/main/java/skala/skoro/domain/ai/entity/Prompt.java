@@ -9,9 +9,11 @@ import skala.skoro.domain.common.BaseEntity;
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "prompts")
 public class Prompt extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "prompt_id")
     private Long id;
 
     @Column(columnDefinition = "TEXT")

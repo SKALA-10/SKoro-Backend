@@ -14,6 +14,7 @@ import skala.skoro.domain.employee.entity.Team;
 public class TeamKpi extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "team_kpi_id")
     private Long id;
 
     private Integer year;
@@ -25,5 +26,6 @@ public class TeamKpi extends BaseEntity {
     private Integer progress;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_id")
     private Team team;
 }

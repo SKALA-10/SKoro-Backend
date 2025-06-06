@@ -13,6 +13,7 @@ import skala.skoro.domain.common.BaseEntity;
 public class Team extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "team_id")
     private Long id;
 
     private String teamName;
@@ -20,5 +21,6 @@ public class Team extends BaseEntity {
     private String teamDescription;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "headquarter_id")
     private Headquarter headquarter;
 }
