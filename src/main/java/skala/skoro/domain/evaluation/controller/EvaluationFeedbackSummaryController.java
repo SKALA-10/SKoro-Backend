@@ -2,6 +2,7 @@ package skala.skoro.domain.evaluation.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ public class EvaluationFeedbackSummaryController {
 
     private final EvaluationFeedbackSummaryService evaluationFeedbackSummaryService;
 
+    @PreAuthorize("hasRole('MANAGER')")
     @GetMapping("/{periodId}")
     public ResponseEntity<EvaluationFeedbackSummaryResponse> getEvaluationFeedbackSummary(@PathVariable("periodId") Long periodId, @AuthenticationPrincipal CustomUserDetails user) {
         return ResponseEntity.ok(evaluationFeedbackSummaryService.getEvaluationFeedbackSummaryByPeriodId(periodId, user.getUsername()));

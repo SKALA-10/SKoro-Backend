@@ -2,6 +2,7 @@ package skala.skoro.domain.employee.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,16 +27,15 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.getEmployeesByTeam(user.getUsername()));
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @GetMapping("/{periodId}/final")
     public ResponseEntity<List<EmployeeFinalEvaluationResponse>> getFinalEmployeeSummary(@PathVariable Long periodId, @AuthenticationPrincipal CustomUserDetails user){
         return ResponseEntity.ok(employeeService.getFinalEmployeeEvaluationsByPeriod(periodId, user.getUsername()));
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @GetMapping("/{periodId}/non-final")
     public ResponseEntity<List<EmployeeNonFinalEvaluationResponse>> getNonFinalEmployeeSummary(@PathVariable Long periodId, @AuthenticationPrincipal CustomUserDetails user){
         return ResponseEntity.ok(employeeService.getNonFinalEmployeeEvaluationsByPeriod(periodId, user.getUsername()));
     }
-
-
-
 }

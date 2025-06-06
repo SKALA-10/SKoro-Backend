@@ -2,6 +2,7 @@ package skala.skoro.domain.evaluation.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import skala.skoro.domain.auth.dto.CustomUserDetails;
@@ -18,11 +19,13 @@ public class TempEvaluationController {
 
     private final TempEvaluationService tempEvaluationService;
 
+    @PreAuthorize("hasRole('MANAGER')")
     @GetMapping
     public ResponseEntity<List<TempEvaluationResponse>> getTeamTempEvaluations(@AuthenticationPrincipal CustomUserDetails user) {
         return ResponseEntity.ok(tempEvaluationService.getTeamTempEvaluations(user.getUsername()));
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @PutMapping("/{empNo}")
     public ResponseEntity<Void> updateTeamMemberTempEvaluations(@PathVariable String empNo, @RequestBody TempEvaluationRequest request) {
         tempEvaluationService.updateTeamMemberTempEvaluations(empNo, request);
