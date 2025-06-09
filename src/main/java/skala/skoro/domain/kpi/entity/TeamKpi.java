@@ -23,7 +23,13 @@ public class TeamKpi extends BaseEntity {
 
     private String kpiDescription;
 
-    private Integer progress;
+    private Integer weight;
+
+    @Column(name = "ai_kpi_progress_rate")
+    private Integer aiKpiProgressRate;
+
+    @Column(name = "ai_kpi_analysis_comment", columnDefinition = "TEXT")
+    private String aiKpiAnalysisComment;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")

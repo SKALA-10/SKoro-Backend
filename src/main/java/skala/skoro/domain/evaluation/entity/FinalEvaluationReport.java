@@ -6,7 +6,8 @@ import skala.skoro.domain.common.BaseEntity;
 import skala.skoro.domain.employee.entity.Employee;
 
 @Entity
-@Table(name = "final_evaluation_reports")
+@Table(name = "final_evaluation_reports",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"emp_no", "team_evaluation_id"}))
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,6 +30,15 @@ public class FinalEvaluationReport extends BaseEntity {
     private Integer contributionRate;
 
     private String skill;
+
+    @Column(name = "ai_annual_achievement_rate")
+    private Integer aiAnnualAchievementRate;
+
+    @Column(name = "ai_annual_performance_summary_comment", columnDefinition = "TEXT")
+    private String aiAnnualPerformanceSummaryComment;
+
+    @Column(name = "ai_annual_peer_talk_summary", columnDefinition = "TEXT")
+    private String aiAnnualPeerTalkSummary;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_evaluation_id")

@@ -27,7 +27,7 @@ public class TeamKpiService {
     public List<TeamKpiDetailResponse> getTeamKpis(String empNo) {
         Employee employee = employeeService.findEmployeeByEmpNo(empNo);
 
-        return teamKpiRepository.findByTeamAndYearOrderByProgressDesc(employee.getTeam(), LocalDate.now().getYear()).stream()
+        return teamKpiRepository.findByTeamAndYearOrderByWeightDesc(employee.getTeam(), LocalDate.now().getYear()).stream()
                 .map(kpi -> {
                     List<EmployeeSimple> participants = taskRepository.findEmployeesByTeamKpiId(kpi.getId()).stream()
                             .map(EmployeeSimple::from)

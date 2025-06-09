@@ -61,7 +61,7 @@ public class PeerEvaluationService {
                 .targetEmpProfileImage(target.getProfileImage())
                 .targetEmpPosition(target.getPosition())
                 .jointTask(peerEvaluation.getJointTask())
-                .progress(peerEvaluation.getProgress())
+                .weight(peerEvaluation.getWeight())
                 .systemKeywords(allKeywords)
                 .selectedKeywords(selectedKeywords)
                 .selectedCustomKeywords(selectedCustomKeywords)
@@ -75,7 +75,7 @@ public class PeerEvaluationService {
         if (Boolean.TRUE.equals(peerEvaluation.getIsCompleted())) {
             throw new IllegalStateException("이미 제출된 동료 평가입니다.");
         }
-        peerEvaluation.completeEvaluation(req.getProgress(), req.getJointTask());
+        peerEvaluation.completeEvaluation(req.getWeight(), req.getJointTask());
 
         // 시스템 키워드 저장
         if (req.getKeywordIds() != null) {

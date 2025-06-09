@@ -32,6 +32,9 @@ public class TeamEvaluation {
     @Column(columnDefinition = "TEXT")
     private String teamPerformanceSummary;
 
+    @Column(name = "ai_team_overall_analysis_comment", columnDefinition = "TEXT")
+    private String aiTeamOverallAnalysisComment;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team team;

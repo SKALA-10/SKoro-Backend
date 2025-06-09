@@ -16,7 +16,7 @@ public class PeerEvaluationDetailResponse {
     private String targetEmpProfileImage;
     private String targetEmpPosition;
     private String jointTask;
-    private Integer progress;
+    private Integer weight;
     private List<KeywordResponse> systemKeywords;
     private List<String> selectedKeywords;
     private List<String> selectedCustomKeywords;

@@ -6,7 +6,8 @@ import skala.skoro.domain.common.BaseEntity;
 import skala.skoro.domain.employee.entity.Employee;
 
 @Entity
-@Table(name = "feedback_reports")
+@Table(name = "feedback_reports",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"emp_no", "team_evaluation_id"}))
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,6 +30,12 @@ public class FeedbackReport extends BaseEntity {
     private String skill;     // 자유입력
 
     private String attitude;  // 자유입력
+
+    @Column(name = "ai_overall_contribution_summary_comment", columnDefinition = "TEXT")
+    private String aiOverallContributionSummaryComment;
+
+    @Column(name = "ai_peer_talk_summary", columnDefinition = "TEXT")
+    private String aiPeerTalkSummary;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_evaluation_id")

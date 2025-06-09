@@ -27,9 +27,7 @@ public class Task extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String targetLevel;
 
-    private Integer progress;
-
-    private String taskPerformance;
+    private Integer weight;
 
     @Column(columnDefinition = "TEXT")
     private String taskDetail;

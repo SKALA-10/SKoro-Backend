@@ -6,5 +6,5 @@ import skala.skoro.domain.kpi.entity.TeamKpi;
 import java.util.List;
 
 public interface TeamKpiRepository extends JpaRepository<TeamKpi, Long> {
-    List<TeamKpi> findByTeamAndYearOrderByProgressDesc(Team team, int year);
+    List<TeamKpi> findByTeamAndYearOrderByWeightDesc(Team team, int year);
 }

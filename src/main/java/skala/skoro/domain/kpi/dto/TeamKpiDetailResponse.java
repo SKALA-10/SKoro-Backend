@@ -13,7 +13,7 @@ public class TeamKpiDetailResponse {
     private Long teamKpiId;
     private Integer year;
     private String kpiName;
-    private Integer progress;
+    private Integer weight;
     private String description;
     private List<EmployeeSimple> participants;
 
@@ -22,7 +22,7 @@ public class TeamKpiDetailResponse {
                 .teamKpiId(teamKpi.getId())
                 .year(teamKpi.getYear())
                 .kpiName(teamKpi.getKpiName())
-                .progress(teamKpi.getProgress())
+                .weight(teamKpi.getWeight())
                 .description(teamKpi.getKpiDescription())
                 .participants(employeeSimple)
                 .build();

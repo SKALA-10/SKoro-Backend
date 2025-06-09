@@ -21,7 +21,7 @@ public class PeerEvaluation extends BaseEntity {
     @Column(name = "is_completed")
     private Boolean isCompleted;
 
-    private Integer progress; // 4,3,2,1
+    private Integer weight; // 4,3,2,1
 
     @Column(name = "joint_task", columnDefinition = "TEXT")
     private String jointTask;
@@ -39,18 +39,18 @@ public class PeerEvaluation extends BaseEntity {
     private TeamEvaluation teamEvaluation;
 
     @Builder
-    public PeerEvaluation(Boolean isCompleted, Integer progress, String jointTask, Employee employee, Employee targetEmployee, TeamEvaluation teamEvaluation) {
+    public PeerEvaluation(Boolean isCompleted, Integer weight, String jointTask, Employee employee, Employee targetEmployee, TeamEvaluation teamEvaluation) {
         this.isCompleted = isCompleted;
-        this.progress = progress;
+        this.weight = weight;
         this.jointTask = jointTask;
         this.employee = employee;
         this.targetEmployee = targetEmployee;
         this.teamEvaluation = teamEvaluation;
     }
 
-    public void completeEvaluation(int progress, String jointTask) {
+    public void completeEvaluation(int weight, String jointTask) {
         this.isCompleted = true;
-        this.progress = progress;
+        this.weight = weight;
         this.jointTask = jointTask;
     }
 }
