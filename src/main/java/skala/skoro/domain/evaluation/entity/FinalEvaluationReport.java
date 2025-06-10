@@ -37,8 +37,8 @@ public class FinalEvaluationReport extends BaseEntity {
     @Column(name = "ai_annual_performance_summary_comment", columnDefinition = "TEXT")
     private String aiAnnualPerformanceSummaryComment;
 
-    @Column(name = "ai_annual_peer_talk_summary", columnDefinition = "TEXT")
-    private String aiAnnualPeerTalkSummary;
+    @Column(name = "ai_peer_talk_summary", columnDefinition = "TEXT")
+    private String aiPeerTalkSummary;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_evaluation_id")
