@@ -31,4 +31,6 @@ public interface TeamEvaluationRepository extends JpaRepository<TeamEvaluation, 
 
     // 평가 기간 중인 팀 평가를 조회
     Optional<TeamEvaluation> findByTeamAndPeriod_StartDateLessThanEqualAndPeriod_EndDateGreaterThanEqual(Team team, LocalDate date1, LocalDate date2);
+
+    List<TeamEvaluation> findByPeriod_Id(Long periodId);
 }
