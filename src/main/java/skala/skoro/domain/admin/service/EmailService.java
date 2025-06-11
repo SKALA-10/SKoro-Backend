@@ -21,8 +21,6 @@ public class EmailService {
             helper.setSubject(subject);
             helper.setText(html, true); // true: HTML
 
-            mailSender.send(message);
-
         } catch (MessagingException e) {
             throw new RuntimeException("이메일 발송 실패", e);
         }
