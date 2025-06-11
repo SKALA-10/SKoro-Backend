@@ -35,6 +35,9 @@ public class TeamEvaluation {
     @Column(name = "ai_team_overall_analysis_comment", columnDefinition = "TEXT")
     private String aiTeamOverallAnalysisComment;
 
+    @Column(name = "ai_collaboration_matrix", columnDefinition = "TEXT")
+    private String aiCollaborationMatrix;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team team;
