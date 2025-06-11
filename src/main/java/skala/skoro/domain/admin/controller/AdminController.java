@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import skala.skoro.domain.admin.service.PeerEvaluationNotificationService;
 import skala.skoro.domain.period.dto.PeriodAvailableResponse;
 import skala.skoro.domain.period.dto.PeriodCreateAndUpdateRequest;
 import skala.skoro.domain.period.service.PeriodService;
@@ -19,6 +20,7 @@ import java.util.List;
 public class AdminController {
 
     private final PeriodService periodService;
+    private final PeerEvaluationNotificationService peerEvaluationNotificationService;
 
     @Operation(summary = "[관리자] 평가 기간 생성")
     @PreAuthorize("hasRole('ADMIN')")
@@ -43,6 +45,14 @@ public class AdminController {
                                           @RequestBody PeriodCreateAndUpdateRequest request) {
         periodService.updatePeriod(periodId, request);
 
+        return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "[관리자] 동료 평가 시작 메일 발송")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/notify/peer-evaluation")
+    public ResponseEntity<Void> notifyPeerEvaluation(Long periodId) {
+        peerEvaluationNotificationService.sendPeerEvaluationNotification(periodId);
         return ResponseEntity.ok().build();
     }
 }
