@@ -48,7 +48,7 @@ public class AdminController {
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = "[관리자] 동료 평가 시작 메일 발송")
+    @Operation(summary = "[관리자] 동료 평가 동료 매칭 및 동료 평가 시작 메일 발송")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/notify/peer-evaluation")
     public ResponseEntity<Void> notifyPeerEvaluation(Long periodId) {
