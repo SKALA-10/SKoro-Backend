@@ -52,7 +52,7 @@ public class AdminController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/notify/peer-evaluation")
     public ResponseEntity<Void> notifyPeerEvaluation(Long periodId) {
-        peerEvaluationNotificationService.sendPeerEvaluationNotification(periodId);
+        peerEvaluationNotificationService.startPeerEvaluation(periodId);
         return ResponseEntity.ok().build();
     }
 }
