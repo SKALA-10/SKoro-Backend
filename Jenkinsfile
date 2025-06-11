@@ -2,19 +2,19 @@ pipeline {
     agent any
 
     environment {
-        GIT_URL = 'https://github.com/SKALA-10/SKoro-Infra.git'
+        GIT_URL = 'git-infra-url'
         GIT_BRANCH = 'main'
-        GIT_USER_NAME = 'KimJ4ehyun'
-        GIT_USER_EMAIL = 'kimjaehyun158@gmail.com'
+        GIT_USER_NAME = 'git-user-name'
+        GIT_USER_EMAIL = 'git-user-email'
 
-        IMAGE_REGISTRY = 'amdp-registry.skala-ai.com/skala25a'
+        IMAGE_REGISTRY = 'image-registry'
         IMAGE_NAME = 'skoro-backend'
         IMAGE_TAG = '1.0.0'
 
         GIT_CREDENTIAL_ID = 'skala-github-id'
         HARBOR_CREDENTIAL_ID = 'skala-image-registry-id'
 
-        SKORO_INFRA_DIR = 'SKoro-Infra'
+        SKORO_INFRA_DIR = 'skoro-infra-dir'
     }
 
     stages {
