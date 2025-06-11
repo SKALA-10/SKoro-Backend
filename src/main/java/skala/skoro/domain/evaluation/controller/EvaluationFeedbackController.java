@@ -20,8 +20,7 @@ public class EvaluationFeedbackController {
 
     private final EvaluationFeedbackService evaluationFeedbackService;
 
-    @Operation(summary = "[팀원] 해당 기간의 팀장에 대한 피드백 저장")
-    @PreAuthorize("hasRole('MEMBER')")
+    @Operation(summary = "해당 기간의 팀장에 대한 피드백 저장")
     @PostMapping
     public ResponseEntity<Void> saveFeedback(@RequestBody EvaluationFeedbackSaveRequest request) {
         evaluationFeedbackService.saveFeedback(request);
