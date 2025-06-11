@@ -49,7 +49,7 @@ pipeline {
                         dir("${SKORO_INFRA_DIR}") {
                             sh """
                                 currentTag=\$(grep 'image:' apps/skoro-backend/deployment.yaml | awk -F ':' '{print \$NF}')
-                                sed -i "s|\$currentTag|backend-${env.FINAL_IMAGE_TAG}|g" apps/skoro-backend/deployment.yaml
+                                sed -i "s|\$currentTag|${env.FINAL_IMAGE_TAG}|g" apps/skoro-backend/deployment.yaml
                                 git config user.name "${GIT_NAME}"
                                 git config user.email "${GIT_EMAIL}"
                                 git add apps/skoro-backend/deployment.yaml
