@@ -2,12 +2,13 @@ package skala.skoro.domain.admin.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import skala.skoro.domain.employee.entity.Employee;
+import skala.skoro.domain.employee.repository.EmployeeRepository;
 import skala.skoro.domain.period.entity.Period;
 import skala.skoro.domain.period.repository.PeriodRepository;
-import skala.skoro.domain.period.service.PeriodService;
 
 import java.time.LocalDate;
-import java.util.Optional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -15,8 +16,9 @@ public class PeerEvaluationNotificationService {
 
     private final EmailService emailService;
     private final PeriodRepository periodRepository;
+    private final EmployeeRepository employeeRepository;
 
-    public void sendPeerEvaluationNotification(String to, Long periodId) {
+    public void sendPeerEvaluationNotification(Long periodId) {
         Period period = periodRepository.findById(periodId)
                 .orElseThrow(() -> new IllegalArgumentException("평가 기간이 존재하지 않습니다."));
 
@@ -56,6 +58,14 @@ public class PeerEvaluationNotificationService {
         </html>
         """.formatted(period.getPeriodName(), startDate, evaluationEndDate);
 
-        emailService.sendMail(to, subject, html);
+        // **전체 사원 이메일 목록 조회**
+        List<Employee> allEmployees = employeeRepository.findAll();
+
+        for (Employee employee : allEmployees) {
+            String to = employee.getEmail();
+            if (to != null && !to.isBlank()) {
+                emailService.sendMail(to, subject, html);
+            }
+        }
     }
 }
