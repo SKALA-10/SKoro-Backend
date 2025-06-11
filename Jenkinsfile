@@ -51,7 +51,7 @@ pipeline {
                                 sed -i 's|backend-INIT_TAG|backend-${env.FINAL_IMAGE_TAG}|g' apps/skoro-backend/base/deployment.yaml
                                 git config user.name "${GIT_NAME}"
                                 git config user.email "${GIT_EMAIL}"
-                                git add apps/skoro-backend/base/deployment.yaml
+                                git add apps/skoro-backend/deployment.yaml
                                 git commit -m "[AUTO] Update backend tag: ${env.FINAL_IMAGE_TAG}" || echo "No changes to commit."
                                 git push origin ${GIT_BRANCH}
                             """
