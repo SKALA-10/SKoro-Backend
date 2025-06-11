@@ -14,11 +14,7 @@ pipeline {
         stage('Docker Build & Push') {
             steps {
                 script {
-                    def hashcode = sh(
-                        script: "date +%s%N | sha256sum | cut -c1-12",
-                        returnStdout: true
-                    ).trim()
-                    def FINAL_IMAGE_TAG = "${IMAGE_TAG}-${BUILD_NUMBER}-${hashcode}"
+                    def FINAL_IMAGE_TAG = "${IMAGE_TAG}-${BUILD_NUMBER}"
                     env.FINAL_IMAGE_TAG = FINAL_IMAGE_TAG
                     echo "📦 Final Image Tag: ${FINAL_IMAGE_TAG}"
 
