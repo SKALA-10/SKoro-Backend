@@ -28,4 +28,8 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     // 팀 내 동일 Task 조회
     List<Task> findByTaskNameAndTeamKpi_Id(String taskName, Long teamKpiId);
+
+    // 특정 팀 KPI를 할당받은 사원 empNo 리스트
+    @Query("select t.employee.empNo from Task t where t.teamKpi.id = :teamKpiId")
+    List<String> findEmpNosByTeamKpiId(@Param("teamKpiId") Long teamKpiId);
 }
