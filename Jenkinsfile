@@ -8,7 +8,7 @@ pipeline {
         GIT_USER_EMAIL = 'git-user-email'
 
         IMAGE_REGISTRY = 'image-registry'
-        IMAGE_NAME = 'skoro-backend'
+        IMAGE_NAME = 'skala25a/skoro-backend'
         IMAGE_TAG = '1.0.0'
 
         GIT_CREDENTIAL_ID = 'skala-github-id'
