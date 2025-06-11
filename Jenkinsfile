@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = 'skala25a/skoro-backend'
+        IMAGE_NAME = 'skoro-backend'
         IMAGE_TAG = '1.0.0'
         GIT_BRANCH = 'main'
 
@@ -25,7 +25,7 @@ pipeline {
                     withCredentials([
                         string(credentialsId: 'image-registry', variable: 'REGISTRY_URL')
                     ]) {
-                        docker.withRegistry("${REGISTRY_URL}", "${HARBOR_CREDENTIAL_ID}") {
+                        docker.withRegistry("https://amdp-registry.skala-ai.com", "${HARBOR_CREDENTIAL_ID}") {
                             def image = docker.build("${REGISTRY_URL}/${IMAGE_NAME}:${FINAL_IMAGE_TAG}", "--platform linux/amd64 .")
                             image.push()
                         }
