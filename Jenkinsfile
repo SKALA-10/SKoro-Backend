@@ -29,7 +29,7 @@ pipeline {
                     env.FINAL_IMAGE_TAG = FINAL_IMAGE_TAG
                     echo "📦 Final Image Tag: ${FINAL_IMAGE_TAG}"
 
-                    docker.withRegistry("https://${IMAGE_REGISTRY}", "${HARBOR_CREDENTIAL_ID}") {
+                    docker.withRegistry("${IMAGE_REGISTRY}", "${HARBOR_CREDENTIAL_ID}") {
                         def image = docker.build("${IMAGE_REGISTRY}/${IMAGE_NAME}:${FINAL_IMAGE_TAG}", "--platform linux/amd64 .")
                         image.push()
                     }
