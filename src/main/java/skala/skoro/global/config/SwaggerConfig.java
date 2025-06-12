@@ -53,6 +53,9 @@ public class SwaggerConfig {
                 )
                 .servers(List.of(
                         new Server()
+                                .url("https://skoro.skala25a.project.skala-ai.com/api")
+                                .description("Production Server"),
+                        new Server()
                                 .url("http://localhost:8080/api")
                                 .description("Local Development server")
                 ));
