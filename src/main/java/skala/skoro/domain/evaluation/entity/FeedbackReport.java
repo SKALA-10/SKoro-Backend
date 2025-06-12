@@ -37,6 +37,9 @@ public class FeedbackReport extends BaseEntity {
     @Column(name = "ai_peer_talk_summary", columnDefinition = "TEXT")
     private String aiPeerTalkSummary;
 
+    @Column(name = "ai_4p_evaluation", columnDefinition = "TEXT")
+    private String ai4pEvaluation;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_evaluation_id")
     private TeamEvaluation teamEvaluation;
