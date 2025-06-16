@@ -21,7 +21,7 @@ public class EvaluationFeedbackService {
 
     @Transactional
     public void saveFeedback(EvaluationFeedbackSaveRequest request) {
-        TeamEvaluation teamEvaluation = teamEvaluationRepository.findById(request.getTeamEvaluationId())
+        TeamEvaluation teamEvaluation = teamEvaluationRepository.findByTeam_IdAndPeriod_Id(request.getTeamId(), request.getPeriodId())
                 .orElseThrow(() -> new IllegalArgumentException("팀 평가 정보가 없습니다."));
         Period period = periodRepository.findById(request.getPeriodId())
                 .orElseThrow(() -> new IllegalArgumentException("기간 정보가 없습니다."));

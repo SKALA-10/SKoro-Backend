@@ -33,4 +33,6 @@ public interface TeamEvaluationRepository extends JpaRepository<TeamEvaluation, 
     Optional<TeamEvaluation> findByTeamAndPeriod_StartDateLessThanEqualAndPeriod_EndDateGreaterThanEqual(Team team, LocalDate date1, LocalDate date2);
 
     List<TeamEvaluation> findByPeriod_Id(Long periodId);
+
+    Optional<TeamEvaluation> findByTeam_IdAndPeriod_Id(Long teamId, Long periodId);
 }
