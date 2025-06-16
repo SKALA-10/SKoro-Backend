@@ -20,7 +20,7 @@ public interface TeamEvaluationRepository extends JpaRepository<TeamEvaluation, 
             ROUND(AVG(CASE WHEN te.team_id = :teamId THEN te.average_achievement_rate END), 1) AS team_avg,
             ROUND(AVG(te.average_achievement_rate), 1) AS all_avg
         FROM team_evaluations te
-        JOIN periods p ON te.period_id = p.id
+        JOIN periods p ON te.period_id = p.period_id
         WHERE p.is_final = 1
         GROUP BY p.year
         ORDER BY p.year DESC
