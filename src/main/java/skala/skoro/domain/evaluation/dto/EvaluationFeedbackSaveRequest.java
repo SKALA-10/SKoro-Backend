@@ -11,6 +11,5 @@ import lombok.NoArgsConstructor;
 @Builder
 public class EvaluationFeedbackSaveRequest {
     private String content;
-    private Long teamId;
     private Long periodId;
 }
