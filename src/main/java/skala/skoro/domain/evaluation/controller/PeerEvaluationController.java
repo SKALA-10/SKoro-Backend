@@ -33,7 +33,7 @@ public class PeerEvaluationController {
     }
 
     @Operation(summary = "동료 평가 제출")
-    @PostMapping("/{peerEvaluationId}/submit")
+    @PutMapping("/{peerEvaluationId}/submit")
     public ResponseEntity<Void> submitEvaluation(
             @PathVariable Long peerEvaluationId,
             @RequestBody SubmitPeerEvaluationRequest request) {

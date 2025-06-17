@@ -3,10 +3,7 @@ package skala.skoro.domain.employee.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import skala.skoro.domain.employee.dto.EmployeeFinalEvaluationResponse;
-import skala.skoro.domain.employee.dto.EmployeeNonFinalEvaluationResponse;
-import skala.skoro.domain.employee.dto.EmployeeSummaryAndStatusResponse;
-import skala.skoro.domain.employee.dto.EmployeeSummaryResponse;
+import skala.skoro.domain.employee.dto.*;
 import skala.skoro.domain.employee.entity.Employee;
 import skala.skoro.domain.employee.entity.Team;
 import skala.skoro.domain.employee.repository.EmployeeRepository;
@@ -63,6 +60,11 @@ public class EmployeeService {
     }
 
     @Transactional(readOnly = true)
+    public EmployeeDetailResponse getEmployeeDetailByEmpNo(String empNo) {
+        return EmployeeDetailResponse.from(employeeRepository.findByEmpNo(empNo));
+    }
+
+    @Transactional(readOnly = true)
     public List<EmployeeFinalEvaluationResponse> getFinalEmployeeEvaluationsByPeriod(Long periodId, String empNo) {
         if (!periodService.isFinal(periodId)) {
             throw new CustomException(INVALID_FINAL_EVALUATION_REQUEST);
@@ -105,7 +107,4 @@ public class EmployeeService {
     public List<Employee> findByTeam(Team team) {
         return employeeRepository.findByTeam(team);
     }
-
-
-
 }
