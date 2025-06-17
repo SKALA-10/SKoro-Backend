@@ -32,8 +32,8 @@ public class TempEvaluationService {
         List<Employee> teamMemberList = employeeService.findByTeam(employee.getTeam());
 
         return teamMemberList.stream()
-                .map(Employee::getEmpNo) // empNo 리스트
-                .map(redisRepository::findById) // Optional<TempEvaluation>
+                .map(Employee::getEmpNo)
+                .map(redisRepository::findById)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .map(TempEvaluationResponse::from)
@@ -45,5 +45,10 @@ public class TempEvaluationService {
                 .orElseThrow(() -> new CustomException(TEMP_EVALUATION_NOT_EXISTS));
 
         redisRepository.save(TempEvaluation.of(empNo, request, previous));
+    }
+
+    public TempEvaluation findByEmpNo(String empNo) {
+        return redisRepository.findById(empNo)
+                .orElseThrow(() -> new CustomException(TEMP_EVALUATION_NOT_EXISTS));
     }
 }

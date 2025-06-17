@@ -5,14 +5,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import skala.skoro.domain.employee.dto.EmployeeFinalEvaluationResponse;
 import skala.skoro.domain.employee.dto.EmployeeNonFinalEvaluationResponse;
+import skala.skoro.domain.employee.dto.EmployeeSummaryAndStatusResponse;
 import skala.skoro.domain.employee.dto.EmployeeSummaryResponse;
 import skala.skoro.domain.employee.entity.Employee;
 import skala.skoro.domain.employee.entity.Team;
 import skala.skoro.domain.employee.repository.EmployeeRepository;
 import skala.skoro.domain.evaluation.entity.TeamEvaluation;
+import skala.skoro.domain.evaluation.entity.TempEvaluation;
 import skala.skoro.domain.evaluation.repository.FeedbackReportRepository;
 import skala.skoro.domain.evaluation.repository.FinalEvaluationReportRepository;
 import skala.skoro.domain.evaluation.repository.TeamEvaluationRepository;
+import skala.skoro.domain.evaluation.service.TempEvaluationService;
 import skala.skoro.domain.period.service.PeriodService;
 import skala.skoro.global.exception.CustomException;
 import java.util.List;
@@ -25,6 +28,8 @@ import static skala.skoro.global.exception.ErrorCode.*;
 public class EmployeeService {
 
     private final PeriodService periodService;
+
+    private final TempEvaluationService tempEvaluationService;
 
     private final EmployeeRepository employeeRepository;
 
@@ -40,6 +45,18 @@ public class EmployeeService {
 
         return employeeRepository.findByTeam(team).stream()
                 .map(EmployeeSummaryResponse::from)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<EmployeeSummaryAndStatusResponse> getEmployeesAndStatusByTeam(String empNo) {
+        Team team = findEmployeeByEmpNo(empNo).getTeam();
+
+        return employeeRepository.findByTeam(team).stream()
+                .map(employee -> {
+                    TempEvaluation tempEvaluation = tempEvaluationService.findByEmpNo(employee.getEmpNo());
+                    return EmployeeSummaryAndStatusResponse.of(employee, tempEvaluation);
+                })
                 .toList();
     }
 
@@ -86,6 +103,7 @@ public class EmployeeService {
     public List<Employee> findByTeam(Team team) {
         return employeeRepository.findByTeam(team);
     }
+
 
 
 }
