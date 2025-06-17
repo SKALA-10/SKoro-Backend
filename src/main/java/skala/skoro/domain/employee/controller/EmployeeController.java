@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import skala.skoro.domain.auth.dto.CustomUserDetails;
 import skala.skoro.domain.employee.dto.EmployeeFinalEvaluationResponse;
 import skala.skoro.domain.employee.dto.EmployeeNonFinalEvaluationResponse;
+import skala.skoro.domain.employee.dto.EmployeeSummaryAndStatusResponse;
 import skala.skoro.domain.employee.dto.EmployeeSummaryResponse;
 import skala.skoro.domain.employee.service.EmployeeService;
 import java.util.List;
@@ -29,6 +30,12 @@ public class EmployeeController {
     @GetMapping
     public ResponseEntity<List<EmployeeSummaryResponse>> getEmployeesByPeriodAndTeam(@AuthenticationPrincipal CustomUserDetails user){
         return ResponseEntity.ok(employeeService.getEmployeesByTeam(user.getUsername()));
+    }
+
+    @Operation(summary = "팀원 리스트 조회(이름, 사진, 하향 평가 완료 여부)")
+    @GetMapping
+    public ResponseEntity<List<EmployeeSummaryAndStatusResponse>> getEmployeesAndStatusByPeriodAndTeam(@AuthenticationPrincipal CustomUserDetails user){
+        return ResponseEntity.ok(employeeService.getEmployeesAndStatusByTeam(user.getUsername()));
     }
 
     @Operation(summary = "[팀장] 팀 관리 화면 - 최종 평가 카드 조회")
