@@ -46,9 +46,4 @@ public class TempEvaluationService {
 
         redisRepository.save(TempEvaluation.of(empNo, request, previous));
     }
-
-    public TempEvaluation findByEmpNo(String empNo) {
-        return redisRepository.findById(empNo)
-                .orElseThrow(() -> new CustomException(TEMP_EVALUATION_NOT_EXISTS));
-    }
 }

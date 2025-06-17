@@ -15,6 +15,7 @@ import skala.skoro.domain.evaluation.entity.TempEvaluation;
 import skala.skoro.domain.evaluation.repository.FeedbackReportRepository;
 import skala.skoro.domain.evaluation.repository.FinalEvaluationReportRepository;
 import skala.skoro.domain.evaluation.repository.TeamEvaluationRepository;
+import skala.skoro.domain.evaluation.repository.TempEvaluationRepository;
 import skala.skoro.domain.evaluation.service.TempEvaluationService;
 import skala.skoro.domain.period.service.PeriodService;
 import skala.skoro.global.exception.CustomException;
@@ -29,8 +30,6 @@ public class EmployeeService {
 
     private final PeriodService periodService;
 
-    private final TempEvaluationService tempEvaluationService;
-
     private final EmployeeRepository employeeRepository;
 
     private final TeamEvaluationRepository teamEvaluationRepository;
@@ -38,6 +37,8 @@ public class EmployeeService {
     private final FinalEvaluationReportRepository finalEvaluationReportRepository;
 
     private final FeedbackReportRepository feedbackReportRepository;
+
+    private final TempEvaluationRepository redisRepository;
 
     @Transactional(readOnly = true)
     public List<EmployeeSummaryResponse> getEmployeesByTeam(String empNo) {
@@ -54,7 +55,8 @@ public class EmployeeService {
 
         return employeeRepository.findByTeam(team).stream()
                 .map(employee -> {
-                    TempEvaluation tempEvaluation = tempEvaluationService.findByEmpNo(employee.getEmpNo());
+                    TempEvaluation tempEvaluation = redisRepository.findById(empNo)
+                            .orElseThrow(() -> new CustomException(TEMP_EVALUATION_NOT_EXISTS));
                     return EmployeeSummaryAndStatusResponse.of(employee, tempEvaluation);
                 })
                 .toList();
