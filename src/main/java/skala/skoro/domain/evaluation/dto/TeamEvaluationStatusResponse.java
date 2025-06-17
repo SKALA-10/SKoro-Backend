@@ -18,6 +18,7 @@ public class TeamEvaluationStatusResponse {
     private Integer year;
     private String periodName;
     private Boolean isFinal;
+    private Long periodId;
 
     public static TeamEvaluationStatusResponse from(TeamEvaluation teamEvaluation) {
         Period period = teamEvaluation.getPeriod();
@@ -29,6 +30,7 @@ public class TeamEvaluationStatusResponse {
                 .year(period.getYear())
                 .periodName(period.getPeriodName())
                 .isFinal(period.getIsFinal())
+                .periodId(period.getId())
                 .build();
     }
 }
