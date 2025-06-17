@@ -10,6 +10,7 @@ import skala.skoro.domain.employee.entity.Role;
 @Builder
 public class EmployeeDetailResponse {
     private String empNo;
+    private String profileImage;
     private String empName;
     private Role Role;
     private String position;
@@ -19,6 +20,7 @@ public class EmployeeDetailResponse {
     public static EmployeeDetailResponse from(Employee employee) {
         return EmployeeDetailResponse.builder()
                 .empNo(employee.getEmpNo())
+                .profileImage(employee.getProfileImage())
                 .empName(employee.getEmpName())
                 .Role(employee.getRole())
                 .position(employee.getPosition())
