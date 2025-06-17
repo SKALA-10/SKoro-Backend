@@ -55,7 +55,7 @@ public class EmployeeService {
 
         return employeeRepository.findByTeam(team).stream()
                 .map(employee -> {
-                    TempEvaluation tempEvaluation = redisRepository.findById(empNo)
+                    TempEvaluation tempEvaluation = redisRepository.findById(employee.getEmpNo())
                             .orElseThrow(() -> new CustomException(TEMP_EVALUATION_NOT_EXISTS));
                     return EmployeeSummaryAndStatusResponse.of(employee, tempEvaluation);
                 })

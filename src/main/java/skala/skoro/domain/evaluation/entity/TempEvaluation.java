@@ -1,5 +1,7 @@
 package skala.skoro.domain.evaluation.entity;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
@@ -24,6 +26,7 @@ public class TempEvaluation implements Serializable {
     private String reason;
 
     @Builder.Default
+    @Enumerated(EnumType.STRING)
     private Status status = Status.NOT_STARTED;
 
     public static TempEvaluation of(String empNo, TempEvaluationRequest request, TempEvaluation previousTempEvaluation){
