@@ -33,7 +33,8 @@ public class EmployeeController {
     }
 
     @Operation(summary = "팀원 리스트 조회(이름, 사진, 하향 평가 완료 여부)")
-    @GetMapping
+    @PreAuthorize("hasRole('MANAGER')")
+    @GetMapping("/status")
     public ResponseEntity<List<EmployeeSummaryAndStatusResponse>> getEmployeesAndStatusByPeriodAndTeam(@AuthenticationPrincipal CustomUserDetails user){
         return ResponseEntity.ok(employeeService.getEmployeesAndStatusByTeam(user.getUsername()));
     }
