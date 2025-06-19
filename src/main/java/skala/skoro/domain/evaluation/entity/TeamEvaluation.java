@@ -25,6 +25,8 @@ public class TeamEvaluation {
 
     private Integer averageAchievementRate;
 
+    private Integer relativePerformance;
+
     private Integer yearOverYearGrowth;
 
     @Column(columnDefinition = "TEXT")
