@@ -25,8 +25,6 @@ public class TeamEvaluation {
 
     private Integer averageAchievementRate;
 
-    private Integer relativePerformance;
-
     private Integer yearOverYearGrowth;
 
     @Column(columnDefinition = "TEXT")
@@ -37,6 +35,9 @@ public class TeamEvaluation {
 
     @Column(name = "ai_collaboration_matrix", columnDefinition = "TEXT")
     private String aiCollaborationMatrix;
+
+    @Column(name = "ai_team_comparison", columnDefinition = "TEXT")
+    private String aiTeamComparison;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
