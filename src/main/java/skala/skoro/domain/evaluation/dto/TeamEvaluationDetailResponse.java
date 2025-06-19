@@ -17,7 +17,6 @@ public class TeamEvaluationDetailResponse {
     private boolean isFinal;
     private Integer year;
     private String periodName;
-    private Integer relativePerformance;
     private Integer yearOverYearGrowth;
     private String teamPerformanceSummary;
     private Integer averageAchievementRate;
@@ -31,7 +30,6 @@ public class TeamEvaluationDetailResponse {
                 .isFinal(period.getIsFinal())
                 .year(period.getYear())
                 .periodName(period.getPeriodName())
-                .relativePerformance(teamEvaluation.getRelativePerformance())
                 .yearOverYearGrowth(teamEvaluation.getYearOverYearGrowth())
                 .teamPerformanceSummary(teamEvaluation.getTeamPerformanceSummary())
                 .averageAchievementRate(teamEvaluation.getAverageAchievementRate())
