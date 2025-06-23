@@ -13,7 +13,6 @@ import skala.skoro.domain.evaluation.repository.FeedbackReportRepository;
 import skala.skoro.domain.evaluation.repository.FinalEvaluationReportRepository;
 import skala.skoro.domain.evaluation.repository.TeamEvaluationRepository;
 import skala.skoro.domain.evaluation.repository.TempEvaluationRepository;
-import skala.skoro.domain.evaluation.service.TempEvaluationService;
 import skala.skoro.domain.period.service.PeriodService;
 import skala.skoro.global.exception.CustomException;
 import java.util.List;
@@ -74,7 +73,7 @@ public class EmployeeService {
 
         TeamEvaluation teamEvaluation = findTeamEvaluationByTeamAndPeriod(team, periodId);
 
-        return finalEvaluationReportRepository.findByTeamEvaluationIdOrderByRankingAsc(teamEvaluation.getId()).stream()
+        return finalEvaluationReportRepository.findRankedFinalEvaluationsByTeamEvaluationId(teamEvaluation.getId()).stream()
                     .map(EmployeeFinalEvaluationResponse::from)
                     .toList();
     }
@@ -89,7 +88,7 @@ public class EmployeeService {
 
         TeamEvaluation teamEvaluation = findTeamEvaluationByTeamAndPeriod(team, periodId);
 
-        return feedbackReportRepository.findByTeamEvaluationIdOrderByRankingAsc(teamEvaluation.getId()).stream()
+        return feedbackReportRepository.findRankedNonFinalEvaluationsByTeamEvaluationId(teamEvaluation.getId()).stream()
                 .map(EmployeeNonFinalEvaluationResponse::from)
                 .toList();
     }
