@@ -24,7 +24,7 @@ public class Employee extends BaseEntity {
 
     private Integer cl;
 
-    private int salary;
+    private Integer salary;
 
     private String position;
 
