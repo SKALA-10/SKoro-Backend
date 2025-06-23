@@ -55,7 +55,7 @@ public class TeamKpiService {
     @Transactional(readOnly = true)
     public List<TeamKpiWithTasksResponse> getTeamKpisWithTasksDetail(int year, String empNo) {
         Team team = employeeService.findEmployeeByEmpNo(empNo).getTeam();
-        List<TeamKpi> teamKpis = teamKpiRepository.findByTeamAndYear(team, year);
+        List<TeamKpi> teamKpis = teamKpiRepository.findByTeamAndYearOrderByWeightDesc(team, year);
 
         return teamKpis.stream()
                 .map(teamKpi -> {
