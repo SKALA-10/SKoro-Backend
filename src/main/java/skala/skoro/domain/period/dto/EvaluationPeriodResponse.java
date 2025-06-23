@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-public class TeamEvaluationPeriodResponse {
+public class EvaluationPeriodResponse {
     private Long periodId;
     private Integer year;
     private String periodName;
@@ -19,8 +19,8 @@ public class TeamEvaluationPeriodResponse {
     private LocalDate startDate;
     private LocalDate endDate;
 
-    public static TeamEvaluationPeriodResponse from(Period period) {
-        return TeamEvaluationPeriodResponse.builder()
+    public static EvaluationPeriodResponse from(Period period) {
+        return EvaluationPeriodResponse.builder()
                 .periodId(period.getId())
                 .year(period.getYear())
                 .periodName(period.getPeriodName())
