@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import skala.skoro.domain.employee.entity.Employee;
 import skala.skoro.domain.kpi.entity.Task;
+import skala.skoro.domain.kpi.entity.TeamKpi;
 
 import java.util.List;
 
@@ -32,4 +33,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     // 특정 팀 KPI를 할당받은 사원 empNo 리스트
     @Query("select t.employee.empNo from Task t where t.teamKpi.id = :teamKpiId")
     List<String> findEmpNosByTeamKpiId(@Param("teamKpiId") Long teamKpiId);
+
+    List<Task> findByTeamKpi(TeamKpi teamKpi);
 }
