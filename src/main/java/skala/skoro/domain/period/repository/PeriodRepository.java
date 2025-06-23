@@ -34,5 +34,27 @@ public interface PeriodRepository extends JpaRepository<Period, Long> {
     """)
     List<Period> findPeriodsByEmpNo(@Param("empNo") String empNo);
 
+    // 사번으로 해당 사원의 평가가 있었던 기간 조회
+    @Query("""
+        SELECT te.period
+        FROM Employee e
+        JOIN e.team t
+        JOIN TeamEvaluation te ON te.team = t
+        WHERE e.empNo = :empNo
+          AND (
+                (te.period.isFinal = true AND EXISTS (
+                    SELECT 1 FROM FinalEvaluationReport fer
+                    WHERE fer.teamEvaluation = te AND fer.employee.empNo = :empNo
+                ))
+             OR
+                (te.period.isFinal = false AND EXISTS (
+                    SELECT 1 FROM FeedbackReport fr
+                    WHERE fr.teamEvaluation = te AND fr.employee.empNo = :empNo
+                ))
+          )
+        ORDER BY te.period.year DESC, te.period.orderInYear ASC
+    """)
+    List<Period> findMemberPeriodsByEmpNo(@Param("empNo") String empNo);
+
     List<Period> findByYearOrderByOrderInYearDesc(int year);
 }
