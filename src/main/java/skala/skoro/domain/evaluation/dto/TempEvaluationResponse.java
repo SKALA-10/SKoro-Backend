@@ -20,7 +20,9 @@ public class TempEvaluationResponse {
         return TempEvaluationResponse.builder()
                 .empNo(tempEvaluation.getEmpNo())
                 .aiReason(tempEvaluation.getAiReason())
-                .score(tempEvaluation.getScore())
+                .score(tempEvaluation.getManagerScore() != null
+                        ? tempEvaluation.getManagerScore()
+                        : tempEvaluation.getScore())
                 .comment(tempEvaluation.getComment())
                 .reason(tempEvaluation.getReason())
                 .status(tempEvaluation.getStatus())

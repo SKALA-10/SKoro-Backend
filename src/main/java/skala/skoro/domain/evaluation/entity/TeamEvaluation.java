@@ -41,6 +41,18 @@ public class TeamEvaluation {
     @Column(name = "ai_team_comparison", columnDefinition = "TEXT")
     private String aiTeamComparison;
 
+    @Column(name = "ai_team_coaching", columnDefinition = "TEXT")
+    private String aiTeamCoaching;
+
+    @Column(name = "overall_comment", columnDefinition = "TEXT")
+    private String overallComment;
+
+    @Column(name = "ai_risk", columnDefinition = "TEXT")
+    private String aiRisk;
+
+    @Column(name = "ai_plan", columnDefinition = "TEXT")
+    private String aiPlan;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team team;
