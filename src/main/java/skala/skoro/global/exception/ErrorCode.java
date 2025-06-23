@@ -16,6 +16,8 @@ public enum ErrorCode {
     FINAL_EVALUATION_REPORT_DOES_NOT_EXIST(HttpStatus.NOT_FOUND,"요청에 해당하는 최종 평가 레포트가 존재하지 않습니다."),
     FEEDBACK_REPORT_DOES_NOT_EXIST(HttpStatus.NOT_FOUND,"요청에 해당하는 분기 피드백 레포트가 존재하지 않습니다."),
     TEMP_EVALUATION_NOT_EXISTS(HttpStatus.NOT_FOUND, "요청에 해당하는 임시 평가 데이터가 존재하지 않습니다."),
+    TEAM_KPI_GRADE_NOT_FOUND(HttpStatus.NOT_FOUND, "요청에 해당하는 팀 KPI 등급 데이터가 존재하지 않습니다."),
+    TASK_GRADE_NOT_FOUND(HttpStatus.NOT_FOUND, "요청에 해당하는 개인 TASK 등급 데이터가 존재하지 않습니다."),
     ;
 
     private final HttpStatus httpStatus;
