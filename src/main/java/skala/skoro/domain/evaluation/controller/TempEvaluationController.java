@@ -14,7 +14,7 @@ import skala.skoro.domain.evaluation.service.TempEvaluationService;
 
 import java.util.List;
 
-@Tag(name = "최종 평가 중간 산출물(Redis)")
+@Tag(name = "임시 평가(중간 산출물)")
 @RestController
 @RequestMapping("/temp-evaluations")
 @RequiredArgsConstructor

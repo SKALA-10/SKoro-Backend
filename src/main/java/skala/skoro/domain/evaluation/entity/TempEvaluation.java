@@ -1,21 +1,24 @@
 package skala.skoro.domain.evaluation.entity;
 
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
+import skala.skoro.domain.common.BaseEntity;
+import skala.skoro.domain.employee.entity.Employee;
 import skala.skoro.domain.evaluation.dto.TempEvaluationRequest;
 import java.io.Serializable;
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-@RedisHash("TempEvaluation") // Redis key TempEvaluation:{empNo}
-public class TempEvaluation implements Serializable {
+@Entity
+@Table(name = "temp_evaluations")
+public class TempEvaluation extends BaseEntity {
     @Id
-    private String empNo;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "temp_evaluation_id")
+    private Long id;
 
     private String aiReason;
 
@@ -29,20 +32,21 @@ public class TempEvaluation implements Serializable {
 
     private String reason;
 
+    @Column(columnDefinition = "TEXT")
+    private String report;
+
     @Builder.Default
     @Enumerated(EnumType.STRING)
     private Status status = Status.NOT_STARTED;
 
-    public static TempEvaluation of(String empNo, TempEvaluationRequest request, TempEvaluation previousTempEvaluation){
-        return TempEvaluation.builder()
-                .empNo(empNo)
-                .aiReason(previousTempEvaluation.getAiReason())
-                .score(previousTempEvaluation.getScore())
-                .rawScore(previousTempEvaluation.getRawScore())
-                .managerScore(request.getScore())
-                .comment(request.getComment())
-                .reason(request.getReason())
-                .status(Status.COMPLETED)
-                .build();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "emp_no")
+    private Employee employee;
+
+    public void updateTempEvaluation (TempEvaluationRequest request){
+        this.managerScore = request.getScore();
+        this.comment = request.getComment();
+        this.reason = request.getReason();
+        this.status = Status.COMPLETED;
     }
 }

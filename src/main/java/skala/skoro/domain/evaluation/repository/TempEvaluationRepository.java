@@ -1,7 +1,14 @@
 package skala.skoro.domain.evaluation.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
+import skala.skoro.domain.employee.entity.Employee;
 import skala.skoro.domain.evaluation.entity.TempEvaluation;
 
-public interface TempEvaluationRepository extends CrudRepository<TempEvaluation, String> {
+import java.util.Optional;
+
+public interface TempEvaluationRepository extends JpaRepository<TempEvaluation, Long> {
+    Optional<TempEvaluation> findByEmployee(Employee employee);
+
+    Optional<TempEvaluation> findByEmployee_EmpNo(String empNo);
 }

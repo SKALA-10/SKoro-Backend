@@ -2,6 +2,7 @@ package skala.skoro.domain.evaluation.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import skala.skoro.domain.common.BaseEntity;
 import skala.skoro.domain.employee.entity.Team;
 import skala.skoro.domain.period.entity.Period;
 
@@ -11,7 +12,7 @@ import skala.skoro.domain.period.entity.Period;
 @Builder
 @Entity
 @Table(name = "team_evaluations")
-public class TeamEvaluation {
+public class TeamEvaluation extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "team_evaluation_id")

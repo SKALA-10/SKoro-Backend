@@ -34,7 +34,7 @@ public class EmployeeService {
 
     private final FeedbackReportRepository feedbackReportRepository;
 
-    private final TempEvaluationRepository redisRepository;
+    private final TempEvaluationRepository tempEvaluationRepository;
 
     @Transactional(readOnly = true)
     public List<EmployeeSummaryResponse> getEmployeesByTeam(String empNo) {
@@ -51,7 +51,7 @@ public class EmployeeService {
 
         return employeeRepository.findByTeam(team).stream()
                 .map(employee -> {
-                    TempEvaluation tempEvaluation = redisRepository.findById(employee.getEmpNo())
+                    TempEvaluation tempEvaluation = tempEvaluationRepository.findByEmployee(employee)
                             .orElseThrow(() -> new CustomException(TEMP_EVALUATION_NOT_EXISTS));
                     return EmployeeSummaryAndStatusResponse.of(employee, tempEvaluation);
                 })
