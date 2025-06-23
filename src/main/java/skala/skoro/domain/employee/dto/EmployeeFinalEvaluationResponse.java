@@ -1,8 +1,6 @@
 package skala.skoro.domain.employee.dto;
 
 import lombok.*;
-import skala.skoro.domain.employee.entity.Employee;
-import skala.skoro.domain.evaluation.entity.FinalEvaluationReport;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
