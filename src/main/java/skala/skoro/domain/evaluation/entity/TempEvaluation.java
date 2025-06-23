@@ -21,6 +21,10 @@ public class TempEvaluation implements Serializable {
 
     private Double score;
 
+    private Double rawScore;
+
+    private Double managerScore;
+
     private String comment;
 
     private String reason;
@@ -33,7 +37,9 @@ public class TempEvaluation implements Serializable {
         return TempEvaluation.builder()
                 .empNo(empNo)
                 .aiReason(previousTempEvaluation.getAiReason())
-                .score(request.getScore())
+                .score(previousTempEvaluation.getScore())
+                .rawScore(previousTempEvaluation.getRawScore())
+                .managerScore(request.getScore())
                 .comment(request.getComment())
                 .reason(request.getReason())
                 .status(Status.COMPLETED)
