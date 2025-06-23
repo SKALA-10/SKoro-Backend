@@ -25,12 +25,9 @@ public class TeamEvaluation {
 
     private Integer averageAchievementRate;
 
-    private Integer relativePerformance;
+    private String relativePerformance;
 
     private Integer yearOverYearGrowth;
-
-    @Column(columnDefinition = "TEXT")
-    private String teamPerformanceSummary;
 
     @Column(name = "ai_team_overall_analysis_comment", columnDefinition = "TEXT")
     private String aiTeamOverallAnalysisComment;
