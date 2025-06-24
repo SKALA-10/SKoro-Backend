@@ -13,4 +13,8 @@ public class TeamEvaluationReportResponse {
     public static TeamEvaluationReportResponse from(TeamEvaluation teamEvaluation) {
         return new TeamEvaluationReportResponse(teamEvaluation.getId(), teamEvaluation.getReport());
     }
+
+    public static TeamEvaluationReportResponse fromMiddle(TeamEvaluation teamEvaluation) {
+        return new TeamEvaluationReportResponse(teamEvaluation.getId(), teamEvaluation.getMiddleReport());
+    }
 }
