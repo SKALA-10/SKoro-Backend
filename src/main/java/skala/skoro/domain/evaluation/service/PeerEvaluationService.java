@@ -1,6 +1,5 @@
 package skala.skoro.domain.evaluation.service;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +15,6 @@ import skala.skoro.domain.evaluation.repository.KeywordRepository;
 import skala.skoro.domain.evaluation.repository.PeerEvaluationKeywordRepository;
 import skala.skoro.domain.evaluation.repository.PeerEvaluationRepository;
 import skala.skoro.global.exception.CustomException;
-
 import java.util.List;
 
 import static skala.skoro.global.exception.ErrorCode.*;
