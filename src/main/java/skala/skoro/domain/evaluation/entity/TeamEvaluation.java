@@ -51,6 +51,9 @@ public class TeamEvaluation extends BaseEntity {
     @Column(name = "ai_plan", columnDefinition = "TEXT")
     private String aiPlan;
 
+    @Column(name = "middle_report", columnDefinition = "TEXT")
+    private String middleReport;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     private Team team;

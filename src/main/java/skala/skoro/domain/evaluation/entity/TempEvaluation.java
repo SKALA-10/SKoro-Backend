@@ -32,9 +32,6 @@ public class TempEvaluation extends BaseEntity {
 
     private String reason;
 
-    @Column(columnDefinition = "TEXT")
-    private String report;
-
     @Builder.Default
     @Enumerated(EnumType.STRING)
     private Status status = Status.NOT_STARTED;
