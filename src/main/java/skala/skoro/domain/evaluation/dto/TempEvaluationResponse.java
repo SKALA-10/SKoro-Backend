@@ -15,7 +15,6 @@ public class TempEvaluationResponse {
     private Double score;
     private String comment;
     private String reason;
-    private String report;
     private Status status;
 
     public static TempEvaluationResponse from(TempEvaluation tempEvaluation) {
@@ -28,7 +27,6 @@ public class TempEvaluationResponse {
                         : tempEvaluation.getScore())
                 .comment(tempEvaluation.getComment())
                 .reason(tempEvaluation.getReason())
-                .report(tempEvaluation.getReport())
                 .status(tempEvaluation.getStatus())
                 .build();
     }
