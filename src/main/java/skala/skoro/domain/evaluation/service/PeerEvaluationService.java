@@ -15,8 +15,11 @@ import skala.skoro.domain.evaluation.entity.PeerEvaluationKeyword;
 import skala.skoro.domain.evaluation.repository.KeywordRepository;
 import skala.skoro.domain.evaluation.repository.PeerEvaluationKeywordRepository;
 import skala.skoro.domain.evaluation.repository.PeerEvaluationRepository;
+import skala.skoro.global.exception.CustomException;
 
 import java.util.List;
+
+import static skala.skoro.global.exception.ErrorCode.*;
 
 
 @Service
@@ -30,7 +33,7 @@ public class PeerEvaluationService {
     @Transactional(readOnly = true)
     public PeerEvaluationDetailResponse getPeerEvaluationDetail(Long peerEvaluationId) {
         PeerEvaluation peerEvaluation = peerEvaluationRepository.findById(peerEvaluationId)
-                .orElseThrow(() -> new EntityNotFoundException("동료 평가 없음"));
+                .orElseThrow(() -> new CustomException(PEER_EVALUATION_NOT_FOUND));
 
         Employee target = peerEvaluation.getTargetEmployee();
 
@@ -71,9 +74,9 @@ public class PeerEvaluationService {
     @Transactional
     public void submitPeerEvaluation(Long peerEvaluationId, SubmitPeerEvaluationRequest req) {
         PeerEvaluation peerEvaluation = peerEvaluationRepository.findById(peerEvaluationId)
-                .orElseThrow(() -> new EntityNotFoundException("동료 평가 없음"));
+                .orElseThrow(() -> new CustomException(PEER_EVALUATION_NOT_FOUND));
         if (Boolean.TRUE.equals(peerEvaluation.getIsCompleted())) {
-            throw new IllegalStateException("이미 제출된 동료 평가입니다.");
+            throw new CustomException(PEER_EVALUATION_ALREADY_SUBMITTED);
         }
         peerEvaluation.completeEvaluation(req.getWeight(), req.getJointTask());
 
@@ -81,7 +84,7 @@ public class PeerEvaluationService {
         if (req.getKeywordIds() != null) {
             for (Long keywordId : req.getKeywordIds()) {
                 Keyword keyword = keywordRepository.findById(keywordId)
-                        .orElseThrow(() -> new EntityNotFoundException("키워드 없음"));
+                        .orElseThrow(() -> new CustomException(KEYWORD_NOT_FOUND));
                 peerEvaluationKeywordRepository.save(PeerEvaluationKeyword.builder()
                         .peerEvaluation(peerEvaluation)
                         .keyword(keyword)
