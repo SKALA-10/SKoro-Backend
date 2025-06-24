@@ -6,11 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 import skala.skoro.domain.employee.entity.Employee;
 import skala.skoro.domain.employee.entity.Team;
 import skala.skoro.domain.employee.service.EmployeeService;
-import skala.skoro.domain.kpi.dto.EmployeeSimple;
-import skala.skoro.domain.kpi.dto.TaskSummaryResponse;
-import skala.skoro.domain.kpi.dto.TeamKpiDetailResponse;
-import skala.skoro.domain.kpi.dto.TeamKpiWithTasksResponse;
+import skala.skoro.domain.kpi.dto.*;
 import skala.skoro.domain.kpi.entity.Grade;
+import skala.skoro.domain.kpi.entity.Task;
 import skala.skoro.domain.kpi.entity.TaskSummary;
 import skala.skoro.domain.kpi.entity.TeamKpi;
 import skala.skoro.domain.kpi.repository.GradeRepository;
@@ -76,6 +74,35 @@ public class TeamKpiService {
                             .toList();
 
                     return TeamKpiWithTasksResponse.of(teamKpi, grade, taskSummaryResponses);
+                })
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<MyTeamKpiWithTasksResponse> getMyTeamKpisWithTasksDetail(int year, String empNo) {
+        Employee employee = employeeService.findEmployeeByEmpNo(empNo);
+        List<TeamKpi> teamKpis = teamKpiRepository.findTeamKpisByEmpNoAndYear(empNo, year);
+
+        return teamKpis.stream()
+                .map(teamKpi -> {
+                    Grade teamKpiGrade = gradeRepository.findByTeamKpi(teamKpi)
+                            .orElseThrow(() -> new CustomException(TEAM_KPI_GRADE_NOT_FOUND));
+
+                    Task task = taskRepository.findByTeamKpiAndEmployee(teamKpi, employee)
+                            .orElseThrow(() -> new CustomException(TASK_NOT_FOUND));
+
+                    TaskSummary taskSummary = taskSummaryRepository.findTopByTaskOrderByPeriod_StartDateDesc(task)
+                            .orElse(null);
+
+                    Grade taskGrade = gradeRepository.findByTask(task)
+                            .orElseThrow(() -> new CustomException(TASK_GRADE_NOT_FOUND));
+
+                    List<EmployeeSimple> participants = taskRepository.findEmployeesByTeamKpiId(teamKpi.getId()).stream()
+                            .filter(e -> !e.getEmpNo().equals(empNo))
+                            .map(EmployeeSimple::from)
+                            .toList();
+
+                    return MyTeamKpiWithTasksResponse.of(teamKpi, teamKpiGrade, task, employee, taskSummary, taskGrade, participants);
                 })
                 .toList();
     }

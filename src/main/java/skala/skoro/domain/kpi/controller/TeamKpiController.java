@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import skala.skoro.domain.auth.dto.CustomUserDetails;
+import skala.skoro.domain.kpi.dto.MyTeamKpiWithTasksResponse;
 import skala.skoro.domain.kpi.dto.TeamKpiDetailResponse;
 import skala.skoro.domain.kpi.dto.TeamKpiWithTasksResponse;
 import skala.skoro.domain.kpi.service.TeamKpiService;
@@ -36,5 +37,11 @@ public class TeamKpiController {
     @GetMapping("/detail")
     public ResponseEntity<List<TeamKpiWithTasksResponse>> getTeamKpisDetail(@RequestParam int year, @AuthenticationPrincipal CustomUserDetails user) {
         return ResponseEntity.ok(teamKpiService.getTeamKpisWithTasksDetail(year, user.getUsername()));
+    }
+
+    @Operation(summary = "팀 목표 리스트 상세 조회")
+    @GetMapping("/my-detail")
+    public ResponseEntity<List<MyTeamKpiWithTasksResponse>> getMyTeamKpisDetail(@RequestParam int year, @AuthenticationPrincipal CustomUserDetails user) {
+        return ResponseEntity.ok(teamKpiService.getMyTeamKpisWithTasksDetail(year, user.getUsername()));
     }
 }
