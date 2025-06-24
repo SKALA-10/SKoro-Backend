@@ -5,10 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import skala.skoro.domain.employee.entity.Employee;
 import skala.skoro.domain.employee.service.EmployeeService;
-import skala.skoro.domain.evaluation.dto.FinalEvaluationAchievementStatsResponse;
-import skala.skoro.domain.evaluation.dto.TeamEvaluationDetailResponse;
-import skala.skoro.domain.evaluation.dto.TeamEvaluationReportResponse;
-import skala.skoro.domain.evaluation.dto.TeamEvaluationStatusResponse;
+import skala.skoro.domain.evaluation.dto.*;
 import skala.skoro.domain.evaluation.entity.TeamEvaluation;
 import skala.skoro.domain.evaluation.repository.TeamEvaluationRepository;
 import skala.skoro.domain.period.repository.PeriodRepository;
@@ -47,6 +44,13 @@ public class TeamEvaluationService {
         Employee employee = employeeService.findEmployeeByEmpNo(empNo);
 
         return TeamEvaluationReportResponse.from(findTeamEvaluationByEmployeeAndPeriodId(employee, periodId));
+    }
+
+    @Transactional(readOnly = true)
+    public TeamEvaluationReportResponse getTeamMiddleReportByPeriodId(Long periodId, String empNo) {
+        Employee employee = employeeService.findEmployeeByEmpNo(empNo);
+
+        return TeamEvaluationReportResponse.fromMiddle(findTeamEvaluationByEmployeeAndPeriodId(employee, periodId));
     }
 
     public TeamEvaluation findTeamEvaluationByEmployeeAndPeriodId(Employee employee, Long periodId) {
