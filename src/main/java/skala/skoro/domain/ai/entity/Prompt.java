@@ -2,6 +2,7 @@ package skala.skoro.domain.ai.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import skala.skoro.domain.ai.dto.PromptRequest;
 import skala.skoro.domain.common.BaseEntity;
 
 @Getter
@@ -16,6 +17,16 @@ public class Prompt extends BaseEntity {
     @Column(name = "prompt_id")
     private Long id;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String prompt;
+
+    public void updatePrompt(String prompt) {
+        this.prompt = prompt;
+    }
+
+    public static Prompt from(PromptRequest request) {
+        return Prompt.builder()
+                .prompt(request.getPrompt())
+                .build();
+    }
 }
