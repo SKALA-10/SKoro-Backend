@@ -54,7 +54,7 @@ public class PeriodService {
             throw new CustomException(INVALID_PHASE_TRANSITION);
         }
 
-        period.updatePeriodPhase(period.getPeriodPhase().next());
+        period.updatePeriodPhase(period.getPeriodPhase().next(period));
     }
 
     @Transactional(readOnly = true)
