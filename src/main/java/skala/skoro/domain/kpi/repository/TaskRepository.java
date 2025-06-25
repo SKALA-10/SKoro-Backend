@@ -6,8 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import skala.skoro.domain.employee.entity.Employee;
 import skala.skoro.domain.kpi.entity.Task;
 import skala.skoro.domain.kpi.entity.TeamKpi;
-
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,4 +37,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> findByTeamKpi(TeamKpi teamKpi);
 
     Optional<Task> findByTeamKpiAndEmployee(TeamKpi teamKpi, Employee employee);
+
+    Boolean existsByTeamKpi(TeamKpi teamKpi);
 }

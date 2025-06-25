@@ -18,6 +18,7 @@ import skala.skoro.domain.kpi.repository.TeamKpiRepository;
 import skala.skoro.global.exception.CustomException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import static skala.skoro.global.exception.ErrorCode.*;
 
@@ -105,5 +106,10 @@ public class TeamKpiService {
                     return MyTeamKpiWithTasksResponse.of(teamKpi, teamKpiGrade, task, employee, taskSummary, taskGrade, participants);
                 })
                 .toList();
+    }
+
+    public Optional<TeamKpi> getTeamKpiByYear() {
+        int year = LocalDate.now().getYear();
+        return teamKpiRepository.findFirstByYear(year);
     }
 }

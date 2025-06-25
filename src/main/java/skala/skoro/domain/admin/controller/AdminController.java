@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import skala.skoro.domain.admin.service.PeerEvaluationNotificationService;
+import skala.skoro.domain.kpi.service.TaskService;
 import skala.skoro.domain.period.dto.PeriodAvailableResponse;
 import skala.skoro.domain.period.dto.PeriodCreateAndUpdateRequest;
 import skala.skoro.domain.period.service.PeriodService;
@@ -20,7 +21,10 @@ import java.util.List;
 public class AdminController {
 
     private final PeriodService periodService;
+
     private final PeerEvaluationNotificationService peerEvaluationNotificationService;
+
+    private final TaskService taskService;
 
     @Operation(summary = "[관리자] 평가 기간 생성")
     @PreAuthorize("hasRole('ADMIN')")
@@ -63,5 +67,12 @@ public class AdminController {
     public ResponseEntity<Void> notifyPeerEvaluation(@RequestParam Long periodId) {
         peerEvaluationNotificationService.startPeerEvaluation(periodId);
         return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "[관리자] 올해 개인 TASK 생성 여부 확인")
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/tasks/generated")
+    public ResponseEntity<Boolean> isCurrentYearTasksGenerated() {
+        return ResponseEntity.ok(taskService.isCurrentYearTasksGenerated());
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import skala.skoro.domain.employee.entity.Team;
 import skala.skoro.domain.kpi.entity.TeamKpi;
 import java.util.List;
+import java.util.Optional;
 
 public interface TeamKpiRepository extends JpaRepository<TeamKpi, Long> {
     List<TeamKpi> findByTeamAndYearOrderByWeightDesc(Team team, int year);
@@ -18,4 +19,6 @@ public interface TeamKpiRepository extends JpaRepository<TeamKpi, Long> {
           AND t.teamKpi.year = :year
     """)
     List<TeamKpi> findTeamKpisByEmpNoAndYear(String empNo, int year);
+
+    Optional<TeamKpi> findFirstByYear(int year);
 }
