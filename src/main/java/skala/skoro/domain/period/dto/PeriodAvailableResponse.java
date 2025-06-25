@@ -2,7 +2,7 @@ package skala.skoro.domain.period.dto;
 
 import lombok.*;
 import skala.skoro.domain.period.entity.Period;
-
+import skala.skoro.domain.period.entity.PeriodPhase;
 import java.time.LocalDate;
 
 @Getter
@@ -15,6 +15,7 @@ public class PeriodAvailableResponse {
     private Boolean isFinal;
     private LocalDate startDate;
     private LocalDate endDate;
+    private PeriodPhase periodPhase;
 
     public static PeriodAvailableResponse from(Period period) {
         return PeriodAvailableResponse.builder()
@@ -23,6 +24,7 @@ public class PeriodAvailableResponse {
                 .isFinal(period.getIsFinal())
                 .startDate(period.getStartDate())
                 .endDate(period.getEndDate())
+                .periodPhase(period.getPeriodPhase())
                 .build();
     }
 }

@@ -12,10 +12,13 @@ import skala.skoro.domain.kpi.entity.TeamKpi;
 import skala.skoro.domain.kpi.repository.TaskRepository;
 import skala.skoro.domain.kpi.repository.TeamKpiRepository;
 import skala.skoro.domain.period.entity.Period;
+import skala.skoro.domain.period.entity.PeriodPhase;
 import skala.skoro.domain.period.repository.PeriodRepository;
-
+import skala.skoro.global.exception.CustomException;
 import java.time.LocalDate;
 import java.util.List;
+
+import static skala.skoro.global.exception.ErrorCode.PERIOD_DOES_NOT_EXIST;
 
 @Service
 @RequiredArgsConstructor
@@ -131,5 +134,10 @@ public class PeerEvaluationNotificationService {
         for (TeamEvaluation teamEval : teamEvals) {
             generatePeerEvaluations(teamEval.getId());
         }
+
+        Period period = periodRepository.findById(periodId)
+                .orElseThrow(() -> new CustomException(PERIOD_DOES_NOT_EXIST));
+
+        period.updatePeriodPhase(PeriodPhase.PEER_EVALUATION);
     }
 }

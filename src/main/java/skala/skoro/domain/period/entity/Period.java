@@ -35,6 +35,9 @@ public class Period extends BaseEntity {
 
     private LocalDate endDate;
 
+    @Enumerated(EnumType.STRING)
+    private PeriodPhase periodPhase;
+
     public void updatePeriod(PeriodCreateAndUpdateRequest request) {
         this.year = request.getStartDate().getYear();
         this.periodName = request.getPeriodName();
@@ -42,6 +45,10 @@ public class Period extends BaseEntity {
         this.isFinal = request.getIsFinal();
         this.startDate = request.getStartDate();
         this.endDate = request.getEndDate();
+    }
+
+    public void updatePeriodPhase(PeriodPhase periodPhase) {
+        this.periodPhase = periodPhase;
     }
 
     public static Period of(PeriodCreateAndUpdateRequest request, Integer orderInYear) {
@@ -53,6 +60,7 @@ public class Period extends BaseEntity {
                 .orderInYear(orderInYear)
                 .startDate(request.getStartDate())
                 .endDate(request.getEndDate())
+                .periodPhase(PeriodPhase.NOT_STARTED)
                 .build();
     }
 }

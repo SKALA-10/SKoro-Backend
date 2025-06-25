@@ -48,6 +48,15 @@ public class AdminController {
         return ResponseEntity.ok().build();
     }
 
+    @Operation(summary = "[관리자] 다음 평가 단계로 전환")
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/period/{periodId}/next-phase")
+    public ResponseEntity<?> advanceToNextPhase(@PathVariable Long periodId) {
+        periodService.advanceToNextPhase(periodId);
+
+        return ResponseEntity.ok().build();
+    }
+
     @Operation(summary = "[관리자] 동료 평가 동료 매칭 및 동료 평가 시작 메일 발송")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/notify/peer-evaluation")

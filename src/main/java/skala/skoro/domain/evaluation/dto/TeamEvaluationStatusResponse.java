@@ -4,6 +4,7 @@ import lombok.*;
 import skala.skoro.domain.evaluation.entity.Status;
 import skala.skoro.domain.evaluation.entity.TeamEvaluation;
 import skala.skoro.domain.period.entity.Period;
+import skala.skoro.domain.period.entity.PeriodPhase;
 import java.time.LocalDate;
 
 @Getter
@@ -19,6 +20,7 @@ public class TeamEvaluationStatusResponse {
     private String periodName;
     private Boolean isFinal;
     private Long periodId;
+    private PeriodPhase periodPhase;
 
     public static TeamEvaluationStatusResponse from(TeamEvaluation teamEvaluation) {
         Period period = teamEvaluation.getPeriod();
@@ -31,6 +33,7 @@ public class TeamEvaluationStatusResponse {
                 .periodName(period.getPeriodName())
                 .isFinal(period.getIsFinal())
                 .periodId(period.getId())
+                .periodPhase(period.getPeriodPhase())
                 .build();
     }
 }

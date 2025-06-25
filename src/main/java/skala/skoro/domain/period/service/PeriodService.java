@@ -7,13 +7,14 @@ import skala.skoro.domain.period.dto.EvaluationPeriodResponse;
 import skala.skoro.domain.period.dto.PeriodAvailableResponse;
 import skala.skoro.domain.period.dto.PeriodCreateAndUpdateRequest;
 import skala.skoro.domain.period.entity.Period;
+import skala.skoro.domain.period.entity.PeriodPhase;
 import skala.skoro.domain.period.repository.PeriodRepository;
 import skala.skoro.global.exception.CustomException;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static skala.skoro.global.exception.ErrorCode.INVALID_PHASE_TRANSITION;
 import static skala.skoro.global.exception.ErrorCode.PERIOD_DOES_NOT_EXIST;
 
 @Service
@@ -43,6 +44,17 @@ public class PeriodService {
                 .orElseThrow(() -> new CustomException(PERIOD_DOES_NOT_EXIST));
 
         period.updatePeriod(request);
+    }
+
+    public void advanceToNextPhase(Long periodId) {
+        Period period = periodRepository.findById(periodId)
+                .orElseThrow(() -> new CustomException(PERIOD_DOES_NOT_EXIST));
+
+        if (period.getPeriodPhase() == PeriodPhase.COMPLETED) {
+            throw new CustomException(INVALID_PHASE_TRANSITION);
+        }
+
+        period.updatePeriodPhase(period.getPeriodPhase().next());
     }
 
     @Transactional(readOnly = true)
