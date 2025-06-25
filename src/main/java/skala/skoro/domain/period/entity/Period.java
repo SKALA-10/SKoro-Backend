@@ -2,7 +2,8 @@ package skala.skoro.domain.period.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import skala.skoro.domain.period.dto.PeriodCreateAndUpdateRequest;
+import skala.skoro.domain.period.dto.PeriodCreateRequest;
+import skala.skoro.domain.period.dto.PeriodUpdateRequest;
 import skala.skoro.domain.common.BaseEntity;
 
 import java.time.LocalDate;
@@ -38,7 +39,7 @@ public class Period extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private PeriodPhase periodPhase;
 
-    public void updatePeriod(PeriodCreateAndUpdateRequest request) {
+    public void updatePeriod(PeriodUpdateRequest request) {
         this.year = request.getStartDate().getYear();
         this.periodName = request.getPeriodName();
         this.unit = request.getUnit();
@@ -51,10 +52,10 @@ public class Period extends BaseEntity {
         this.periodPhase = periodPhase;
     }
 
-    public static Period of(PeriodCreateAndUpdateRequest request, Integer orderInYear) {
+    public static Period of(PeriodCreateRequest request, Integer orderInYear, String periodName) {
         return Period.builder()
                 .year(request.getStartDate().getYear())
-                .periodName(request.getPeriodName())
+                .periodName(periodName)
                 .unit(request.getUnit())
                 .isFinal(request.getIsFinal())
                 .orderInYear(orderInYear)

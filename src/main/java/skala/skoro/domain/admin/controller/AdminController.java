@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import skala.skoro.domain.admin.service.PeerEvaluationNotificationService;
 import skala.skoro.domain.kpi.service.TaskService;
 import skala.skoro.domain.period.dto.PeriodAvailableResponse;
-import skala.skoro.domain.period.dto.PeriodCreateAndUpdateRequest;
+import skala.skoro.domain.period.dto.PeriodCreateRequest;
+import skala.skoro.domain.period.dto.PeriodUpdateRequest;
 import skala.skoro.domain.period.service.PeriodService;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class AdminController {
     @Operation(summary = "[관리자] 평가 기간 생성")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/period")
-    public ResponseEntity<?> createPeriod(@RequestBody PeriodCreateAndUpdateRequest request) {
+    public ResponseEntity<?> createPeriod(@RequestBody PeriodCreateRequest request) {
         periodService.createPeriod(request);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -46,7 +47,7 @@ public class AdminController {
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/period/{periodId}")
     public ResponseEntity<?> updatePeriod(@PathVariable Long periodId,
-                                          @RequestBody PeriodCreateAndUpdateRequest request) {
+                                          @RequestBody PeriodUpdateRequest request) {
         periodService.updatePeriod(periodId, request);
 
         return ResponseEntity.ok().build();

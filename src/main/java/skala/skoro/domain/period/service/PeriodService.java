@@ -5,7 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import skala.skoro.domain.period.dto.EvaluationPeriodResponse;
 import skala.skoro.domain.period.dto.PeriodAvailableResponse;
-import skala.skoro.domain.period.dto.PeriodCreateAndUpdateRequest;
+import skala.skoro.domain.period.dto.PeriodCreateRequest;
+import skala.skoro.domain.period.dto.PeriodUpdateRequest;
 import skala.skoro.domain.period.entity.Period;
 import skala.skoro.domain.period.entity.PeriodPhase;
 import skala.skoro.domain.period.repository.PeriodRepository;
@@ -24,12 +25,17 @@ public class PeriodService {
 
     private final PeriodRepository periodRepository;
 
-    public void createPeriod(PeriodCreateAndUpdateRequest request) {
-        int lastOrderInYear = periodRepository.findTopByYearAndUnitOrderByOrderInYearDesc(request.getStartDate().getYear(), request.getUnit())
+    public void createPeriod(PeriodCreateRequest request) {
+        int year = request.getStartDate().getYear();
+        int nowOrderInYear = periodRepository.findTopByYearAndUnitOrderByOrderInYearDesc(year, request.getUnit())
                 .map(Period::getOrderInYear)
-                .orElse(0);
+                .orElse(0) + 1;
 
-        periodRepository.save(Period.of(request, lastOrderInYear + 1));
+        String periodName = request.getIsFinal()
+                ? String.format("%d년도 최종 평가", year)
+                : String.format("%d년도 %d분기 평가", year, nowOrderInYear);
+
+        periodRepository.save(Period.of(request, nowOrderInYear, periodName));
     }
 
     @Transactional(readOnly = true)
@@ -39,7 +45,7 @@ public class PeriodService {
                 .collect(Collectors.toList());
     }
 
-    public void updatePeriod(Long periodId, PeriodCreateAndUpdateRequest request) {
+    public void updatePeriod(Long periodId, PeriodUpdateRequest request) {
         Period period = periodRepository.findById(periodId)
                 .orElseThrow(() -> new CustomException(PERIOD_DOES_NOT_EXIST));
 

@@ -10,8 +10,7 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class PeriodCreateAndUpdateRequest {
-    private String periodName;
+public class PeriodCreateRequest {
     private Unit unit;
     private Boolean isFinal;
     private LocalDate startDate;
