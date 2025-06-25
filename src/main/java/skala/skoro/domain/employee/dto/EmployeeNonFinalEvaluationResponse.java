@@ -1,6 +1,8 @@
 package skala.skoro.domain.employee.dto;
 
 import lombok.*;
+import skala.skoro.domain.employee.entity.Employee;
+import skala.skoro.domain.evaluation.entity.FeedbackReport;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -16,16 +18,17 @@ public class EmployeeNonFinalEvaluationResponse {
     private String attitude;
     private Integer ranking;
 
-    public static EmployeeNonFinalEvaluationResponse from(RankedNonFinalEvaluationProjection projection) {
+    public static EmployeeNonFinalEvaluationResponse from(FeedbackReport feedbackReport) {
+        Employee employee = feedbackReport.getEmployee();
         return EmployeeNonFinalEvaluationResponse.builder()
-                .empNo(projection.getEmpNo())
-                .empName(projection.getEmpName())
-                .profileImage(projection.getProfileImage())
-                .position(projection.getPosition())
-                .contributionRate(projection.getContributionRate())
-                .aiAchievementRate(projection.getAiAchievementRate())
-                .attitude(projection.getAttitude())
-                .ranking(projection.getRanking())
+                .empNo(employee.getEmpNo())
+                .empName(employee.getEmpName())
+                .profileImage(employee.getProfileImage())
+                .position(employee.getPosition())
+                .contributionRate(feedbackReport.getContributionRate())
+                .aiAchievementRate(feedbackReport.getAiAchievementRate())
+                .attitude(feedbackReport.getAttitude())
+                .ranking(feedbackReport.getRanking())
                 .build();
     }
 }

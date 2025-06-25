@@ -22,6 +22,8 @@ public class FeedbackReport extends BaseEntity {
     @Column(name = "report", columnDefinition = "TEXT")
     private String report;
 
+    private Integer ranking;
+
     @Column(name = "contribution_rate")
     private Integer contributionRate;
 

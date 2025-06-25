@@ -73,7 +73,7 @@ public class EmployeeService {
 
         TeamEvaluation teamEvaluation = findTeamEvaluationByTeamAndPeriod(team, periodId);
 
-        return finalEvaluationReportRepository.findRankedFinalEvaluationsByTeamEvaluationId(teamEvaluation.getId()).stream()
+        return finalEvaluationReportRepository.findByTeamEvaluationIdOrderByRankingAsc(teamEvaluation.getId()).stream()
                     .map(EmployeeFinalEvaluationResponse::from)
                     .toList();
     }
@@ -88,7 +88,7 @@ public class EmployeeService {
 
         TeamEvaluation teamEvaluation = findTeamEvaluationByTeamAndPeriod(team, periodId);
 
-        return feedbackReportRepository.findRankedNonFinalEvaluationsByTeamEvaluationId(teamEvaluation.getId()).stream()
+        return feedbackReportRepository.findByTeamEvaluationIdOrderByRankingAsc(teamEvaluation.getId()).stream()
                 .map(EmployeeNonFinalEvaluationResponse::from)
                 .toList();
     }

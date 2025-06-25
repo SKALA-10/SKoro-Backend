@@ -22,6 +22,8 @@ public class FinalEvaluationReport extends BaseEntity {
     @Column(name = "report", columnDefinition = "TEXT")
     private String report;
 
+    private Integer ranking;
+
     private Double score;
 
     @Column(name = "contribution_rate")
