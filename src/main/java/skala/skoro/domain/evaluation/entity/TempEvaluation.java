@@ -2,11 +2,9 @@ package skala.skoro.domain.evaluation.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.redis.core.RedisHash;
 import skala.skoro.domain.common.BaseEntity;
 import skala.skoro.domain.employee.entity.Employee;
 import skala.skoro.domain.evaluation.dto.TempEvaluationRequest;
-import java.io.Serializable;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -39,6 +37,10 @@ public class TempEvaluation extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "emp_no")
     private Employee employee;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_evaluation_id")
+    private TeamEvaluation teamEvaluation;
 
     public void updateTempEvaluation (TempEvaluationRequest request){
         this.managerScore = request.getScore();
