@@ -46,12 +46,12 @@ public class EmployeeService {
     }
 
     @Transactional(readOnly = true)
-    public List<EmployeeSummaryAndStatusResponse> getEmployeesAndStatusByTeam(String empNo) {
+    public List<EmployeeSummaryAndStatusResponse> getEmployeesAndStatusByTeam(Long teamEvaluationId, String empNo) {
         Team team = findEmployeeByEmpNo(empNo).getTeam();
 
         return employeeRepository.findByTeam(team).stream()
                 .map(employee -> {
-                    TempEvaluation tempEvaluation = tempEvaluationRepository.findByEmployee(employee)
+                    TempEvaluation tempEvaluation = tempEvaluationRepository.findByEmployeeAndTeamEvaluation_Id(employee, teamEvaluationId)
                             .orElseThrow(() -> new CustomException(TEMP_EVALUATION_NOT_EXISTS));
                     return EmployeeSummaryAndStatusResponse.of(employee, tempEvaluation);
                 })

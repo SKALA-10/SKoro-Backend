@@ -8,7 +8,5 @@ import skala.skoro.domain.evaluation.entity.TempEvaluation;
 import java.util.Optional;
 
 public interface TempEvaluationRepository extends JpaRepository<TempEvaluation, Long> {
-    Optional<TempEvaluation> findByEmployee(Employee employee);
-
-    Optional<TempEvaluation> findByEmployee_EmpNo(String empNo);
+    Optional<TempEvaluation> findByEmployeeAndTeamEvaluation_Id(Employee employee, Long teamEvaluationId);
 }

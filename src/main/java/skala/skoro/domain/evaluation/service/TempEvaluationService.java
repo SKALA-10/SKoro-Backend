@@ -11,7 +11,6 @@ import skala.skoro.domain.evaluation.entity.TempEvaluation;
 import skala.skoro.domain.evaluation.repository.TempEvaluationRepository;
 import skala.skoro.global.exception.CustomException;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.Optional;
 
@@ -27,19 +26,21 @@ public class TempEvaluationService {
     private final TempEvaluationRepository tempEvaluationRepository;
 
     @Transactional(readOnly = true)
-    public List<TempEvaluationResponse> getTeamTempEvaluations(String empNo) {
+    public List<TempEvaluationResponse> getTeamTempEvaluations(Long teamEvaluationId, String empNo) {
         Employee employee = employeeService.findEmployeeByEmpNo(empNo);
 
         return employeeService.findByTeam(employee.getTeam()).stream()
-                .map(tempEvaluationRepository::findByEmployee)
+                .map(teamMember -> tempEvaluationRepository.findByEmployeeAndTeamEvaluation_Id(teamMember, teamEvaluationId))
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .map(TempEvaluationResponse::from)
                 .collect(Collectors.toList());
     }
 
-    public void updateTeamMemberTempEvaluations(String empNo, TempEvaluationRequest request) {
-        TempEvaluation previous = tempEvaluationRepository.findByEmployee_EmpNo(empNo)
+    public void updateTeamMemberTempEvaluations(Long teamEvaluationId, String empNo, TempEvaluationRequest request) {
+        Employee employee = employeeService.findEmployeeByEmpNo(empNo);
+
+        TempEvaluation previous = tempEvaluationRepository.findByEmployeeAndTeamEvaluation_Id(employee, teamEvaluationId)
                 .orElseThrow(() -> new CustomException(TEMP_EVALUATION_NOT_EXISTS));
 
         previous.updateTempEvaluation(request);
