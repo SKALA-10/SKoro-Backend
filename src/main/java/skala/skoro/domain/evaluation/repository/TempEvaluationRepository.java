@@ -1,7 +1,6 @@
 package skala.skoro.domain.evaluation.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 import skala.skoro.domain.employee.entity.Employee;
 import skala.skoro.domain.evaluation.entity.TempEvaluation;
 
