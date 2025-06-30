@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface TeamKpiRepository extends JpaRepository<TeamKpi, Long> {
     List<TeamKpi> findByTeamAndYearOrderByWeightDesc(Team team, int year);
 
-    List<TeamKpi> findByTeam_Id(Long teamId);
+    List<TeamKpi> findByTeam_IdAndYear(Long teamId, int year);
 
     @Query("""
         SELECT DISTINCT t.teamKpi

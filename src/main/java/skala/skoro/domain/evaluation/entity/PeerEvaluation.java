@@ -53,4 +53,8 @@ public class PeerEvaluation extends BaseEntity {
         this.weight = weight;
         this.jointTask = jointTask;
     }
+
+    public void updateJointTask(String task) {
+        this.jointTask += ";" + task;
+    }
 }

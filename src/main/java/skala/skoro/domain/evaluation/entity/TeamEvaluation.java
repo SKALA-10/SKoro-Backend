@@ -61,4 +61,16 @@ public class TeamEvaluation extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "period_id")
     private Period period;
+
+    public static TeamEvaluation of(Team team, Period period, Status status) {
+        return TeamEvaluation.builder()
+                .team(team)
+                .period(period)
+                .status(status)
+                .build();
+    }
+
+    public void updateStatus(Status status) {
+        this.status = status;
+    }
 }

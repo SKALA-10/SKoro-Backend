@@ -3,6 +3,7 @@ package skala.skoro.domain.period.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import skala.skoro.domain.evaluation.service.TeamEvaluationService;
 import skala.skoro.domain.period.dto.EvaluationPeriodResponse;
 import skala.skoro.domain.period.dto.PeriodAvailableResponse;
 import skala.skoro.domain.period.dto.PeriodCreateRequest;
@@ -25,6 +26,8 @@ public class PeriodService {
 
     private final PeriodRepository periodRepository;
 
+    private final TeamEvaluationService teamEvaluationService;
+
     public void createPeriod(PeriodCreateRequest request) {
         int year = request.getStartDate().getYear();
         int nowOrderInYear = periodRepository.findTopByYearAndUnitOrderByOrderInYearDesc(year, request.getUnit())
@@ -35,7 +38,9 @@ public class PeriodService {
                 ? String.format("%d년도 최종 평가", year)
                 : String.format("%d년도 %d분기 평가", year, nowOrderInYear);
 
-        periodRepository.save(Period.of(request, nowOrderInYear, periodName));
+        Period savedPeriod = periodRepository.save(Period.of(request, nowOrderInYear, periodName));
+
+        teamEvaluationService.createAllTeamEvaluations(savedPeriod);
     }
 
     @Transactional(readOnly = true)
@@ -68,15 +73,6 @@ public class PeriodService {
         return periodRepository.findPeriodsByEmpNo(empNo).stream()
                 .map(EvaluationPeriodResponse::from)
                 .toList();
-    }
-
-    public boolean isFinal(Long periodId) {
-        return findPeriodById(periodId).getIsFinal();
-    }
-
-    private Period findPeriodById(Long periodId){
-        return periodRepository.findById(periodId)
-                .orElseThrow(() -> new CustomException(PERIOD_DOES_NOT_EXIST));
     }
 
     public List<EvaluationPeriodResponse> getMemberEvaluationPeriods(String empNo) {

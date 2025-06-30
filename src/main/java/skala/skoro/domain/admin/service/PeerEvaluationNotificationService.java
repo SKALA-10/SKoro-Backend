@@ -3,8 +3,10 @@ package skala.skoro.domain.admin.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import skala.skoro.domain.employee.entity.Employee;
+import skala.skoro.domain.employee.entity.Role;
 import skala.skoro.domain.employee.repository.EmployeeRepository;
 import skala.skoro.domain.evaluation.entity.PeerEvaluation;
+import skala.skoro.domain.evaluation.entity.Status;
 import skala.skoro.domain.evaluation.entity.TeamEvaluation;
 import skala.skoro.domain.evaluation.repository.PeerEvaluationRepository;
 import skala.skoro.domain.evaluation.repository.TeamEvaluationRepository;
@@ -16,7 +18,7 @@ import skala.skoro.domain.period.entity.PeriodPhase;
 import skala.skoro.domain.period.repository.PeriodRepository;
 import skala.skoro.global.exception.CustomException;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.*;
 
 import static skala.skoro.global.exception.ErrorCode.PERIOD_DOES_NOT_EXIST;
 
@@ -89,38 +91,50 @@ public class PeerEvaluationNotificationService {
 
         Long teamId = teamEval.getTeam().getId();
 
+        Map<String, PeerEvaluation> createdPairs = new HashMap<>();
+
         // 2. 해당 팀의 KPI 전체 조회
-        List<TeamKpi> teamKpis = teamKpiRepository.findByTeam_Id(teamId);
+        List<TeamKpi> teamKpis = teamKpiRepository.findByTeam_IdAndYear(teamId, LocalDate.now().getYear());
 
         for (TeamKpi teamKpi : teamKpis) {
             Long teamKpiId = teamKpi.getId();
             String kpiName = teamKpi.getKpiName();
 
             // 3. 해당 KPI를 수행한 사원들 조회
-            List<String> empNos = taskRepository.findEmpNosByTeamKpiId(teamKpiId);
+            List<String> empNos = taskRepository.findEmployeesByTeamKpiId(teamKpiId).stream()
+                    .filter(employee -> Role.MEMBER.equals(employee.getRole()))
+                    .map(Employee::getEmpNo)
+                    .toList();
 
             // 4. 사원-사원(자기 자신 제외) 모든 조합으로 동료 평가 레코드 생성
             for (String evaluator : empNos) {
                 for (String target : empNos) {
                     if (!evaluator.equals(target)) {
-                        Employee evaluatorEmp = employeeRepository.findById(evaluator)
-                                .orElseThrow(() -> new IllegalArgumentException("사번 없음: " + evaluator));
-                        Employee targetEmp = employeeRepository.findById(target)
-                                .orElseThrow(() -> new IllegalArgumentException("사번 없음: " + target));
+                        String key = evaluator + "->" + target;
 
-                        PeerEvaluation entity = PeerEvaluation.builder()
-                                .isCompleted(false)
-                                .jointTask(kpiName)
-                                .employee(evaluatorEmp)
-                                .targetEmployee(targetEmp)
-                                .teamEvaluation(teamEval)
-                                .build();
+                        if (createdPairs.containsKey(key)) {
+                            createdPairs.get(key).updateJointTask(kpiName);
+                        } else {
+                            Employee evaluatorEmp = employeeRepository.findById(evaluator)
+                                    .orElseThrow(() -> new IllegalArgumentException("사번 없음: " + evaluator));
+                            Employee targetEmp = employeeRepository.findById(target)
+                                    .orElseThrow(() -> new IllegalArgumentException("사번 없음: " + target));
 
-                        peerEvaluationRepository.save(entity);
+                            PeerEvaluation entity = PeerEvaluation.builder()
+                                    .isCompleted(false)
+                                    .jointTask(kpiName)
+                                    .employee(evaluatorEmp)
+                                    .targetEmployee(targetEmp)
+                                    .teamEvaluation(teamEval)
+                                    .build();
+
+                            createdPairs.put(key, entity);
+                        }
                     }
                 }
             }
         }
+        peerEvaluationRepository.saveAll(createdPairs.values());
     }
 
     // 동료평가 시작: 메일 발송 + 동료평가 매핑 자동 생성
@@ -133,6 +147,7 @@ public class PeerEvaluationNotificationService {
         List<TeamEvaluation> teamEvals = teamEvaluationRepository.findByPeriod_Id(periodId);
         for (TeamEvaluation teamEval : teamEvals) {
             generatePeerEvaluations(teamEval.getId());
+            teamEval.updateStatus(Status.IN_PROGRESS);
         }
 
         Period period = periodRepository.findById(periodId)

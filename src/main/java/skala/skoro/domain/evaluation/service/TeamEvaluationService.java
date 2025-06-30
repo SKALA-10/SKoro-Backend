@@ -4,10 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import skala.skoro.domain.employee.entity.Employee;
+import skala.skoro.domain.employee.repository.TeamRepository;
 import skala.skoro.domain.employee.service.EmployeeService;
 import skala.skoro.domain.evaluation.dto.*;
+import skala.skoro.domain.evaluation.entity.Status;
 import skala.skoro.domain.evaluation.entity.TeamEvaluation;
 import skala.skoro.domain.evaluation.repository.TeamEvaluationRepository;
+import skala.skoro.domain.period.entity.Period;
 import skala.skoro.domain.period.repository.PeriodRepository;
 import skala.skoro.global.exception.CustomException;
 import java.util.Optional;
@@ -26,6 +29,8 @@ public class TeamEvaluationService {
     private final TeamEvaluationRepository teamEvaluationRepository;
 
     private final PeriodRepository periodRepository;
+
+    private final TeamRepository teamRepository;
 
     @Transactional(readOnly = true)
     public List<TeamEvaluationDetailResponse> findTeamEvaluationsByYear(String empNo) {
@@ -76,5 +81,12 @@ public class TeamEvaluationService {
         return teamEvaluationRepository.findByTeamAndPeriod_StartDateLessThanEqualAndPeriod_EndDateGreaterThanEqual(employee.getTeam(), today, today)
                 .map(TeamEvaluationStatusResponse::from)
                 .orElseThrow(() -> new CustomException(TEAM_EVALUATION_DOES_NOT_EXIST));
+    }
+
+    public void createAllTeamEvaluations(Period period){
+        teamRepository.findAll()
+                .forEach(team -> teamEvaluationRepository.save(
+                        TeamEvaluation.of(team, period, Status.NOT_STARTED)
+                ));
     }
 }
