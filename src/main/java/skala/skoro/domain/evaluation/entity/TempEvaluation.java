@@ -18,16 +18,20 @@ public class TempEvaluation extends BaseEntity {
     @Column(name = "temp_evaluation_id")
     private Long id;
 
+    @Column(name = "ai_reason", columnDefinition = "TEXT")
     private String aiReason;
 
     private Double score;
 
+    @Column(name = "raw_score", columnDefinition = "TEXT")
     private Double rawScore;
 
     private Double managerScore;
 
+    @Column(columnDefinition = "TEXT")
     private String comment;
 
+    @Column(columnDefinition = "TEXT")
     private String reason;
 
     @Builder.Default
