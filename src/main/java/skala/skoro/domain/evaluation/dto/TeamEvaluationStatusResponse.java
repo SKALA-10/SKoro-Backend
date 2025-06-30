@@ -1,8 +1,8 @@
 package skala.skoro.domain.evaluation.dto;
 
 import lombok.*;
-import skala.skoro.domain.evaluation.entity.Status;
 import skala.skoro.domain.evaluation.entity.TeamEvaluation;
+import skala.skoro.domain.evaluation.entity.TeamEvaluationStatus;
 import skala.skoro.domain.period.entity.Period;
 import skala.skoro.domain.period.entity.PeriodPhase;
 import java.time.LocalDate;
@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Builder
 public class TeamEvaluationStatusResponse {
     private Long teamEvaluationId;
-    private Status status;
+    private TeamEvaluationStatus status;
     private LocalDate startDate;
     private LocalDate endDate;
     private Integer year;
@@ -26,7 +26,7 @@ public class TeamEvaluationStatusResponse {
         Period period = teamEvaluation.getPeriod();
         return TeamEvaluationStatusResponse.builder()
                 .teamEvaluationId(teamEvaluation.getId())
-                .status(teamEvaluation.getStatus())
+                .status(teamEvaluation.getStatus().toFrontendView())
                 .startDate(period.getStartDate())
                 .endDate(period.getEndDate())
                 .year(period.getYear())

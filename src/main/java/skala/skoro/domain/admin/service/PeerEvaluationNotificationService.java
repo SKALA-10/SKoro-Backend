@@ -6,8 +6,8 @@ import skala.skoro.domain.employee.entity.Employee;
 import skala.skoro.domain.employee.entity.Role;
 import skala.skoro.domain.employee.repository.EmployeeRepository;
 import skala.skoro.domain.evaluation.entity.PeerEvaluation;
-import skala.skoro.domain.evaluation.entity.Status;
 import skala.skoro.domain.evaluation.entity.TeamEvaluation;
+import skala.skoro.domain.evaluation.entity.TeamEvaluationStatus;
 import skala.skoro.domain.evaluation.repository.PeerEvaluationRepository;
 import skala.skoro.domain.evaluation.repository.TeamEvaluationRepository;
 import skala.skoro.domain.kpi.entity.TeamKpi;
@@ -147,7 +147,7 @@ public class PeerEvaluationNotificationService {
         List<TeamEvaluation> teamEvals = teamEvaluationRepository.findByPeriod_Id(periodId);
         for (TeamEvaluation teamEval : teamEvals) {
             generatePeerEvaluations(teamEval.getId());
-            teamEval.updateStatus(Status.IN_PROGRESS);
+            teamEval.updateStatus(TeamEvaluationStatus.IN_PROGRESS);
         }
 
         Period period = periodRepository.findById(periodId)

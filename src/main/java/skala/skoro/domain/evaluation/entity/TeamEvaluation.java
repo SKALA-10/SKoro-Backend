@@ -22,7 +22,7 @@ public class TeamEvaluation extends BaseEntity {
     private String report;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private TeamEvaluationStatus status;
 
     private Integer averageAchievementRate;
 
@@ -62,7 +62,7 @@ public class TeamEvaluation extends BaseEntity {
     @JoinColumn(name = "period_id")
     private Period period;
 
-    public static TeamEvaluation of(Team team, Period period, Status status) {
+    public static TeamEvaluation of(Team team, Period period, TeamEvaluationStatus status) {
         return TeamEvaluation.builder()
                 .team(team)
                 .period(period)
@@ -70,7 +70,7 @@ public class TeamEvaluation extends BaseEntity {
                 .build();
     }
 
-    public void updateStatus(Status status) {
+    public void updateStatus(TeamEvaluationStatus status) {
         this.status = status;
     }
 }

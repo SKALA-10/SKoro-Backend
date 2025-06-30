@@ -9,6 +9,7 @@ import skala.skoro.domain.employee.service.EmployeeService;
 import skala.skoro.domain.evaluation.dto.*;
 import skala.skoro.domain.evaluation.entity.Status;
 import skala.skoro.domain.evaluation.entity.TeamEvaluation;
+import skala.skoro.domain.evaluation.entity.TeamEvaluationStatus;
 import skala.skoro.domain.evaluation.repository.TeamEvaluationRepository;
 import skala.skoro.domain.period.entity.Period;
 import skala.skoro.domain.period.repository.PeriodRepository;
@@ -86,7 +87,7 @@ public class TeamEvaluationService {
     public void createAllTeamEvaluations(Period period){
         teamRepository.findAll()
                 .forEach(team -> teamEvaluationRepository.save(
-                        TeamEvaluation.of(team, period, Status.NOT_STARTED)
+                        TeamEvaluation.of(team, period, TeamEvaluationStatus.NOT_STARTED)
                 ));
     }
 }
