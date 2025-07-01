@@ -12,7 +12,6 @@ import skala.skoro.domain.period.entity.Period;
 import skala.skoro.domain.period.entity.PeriodPhase;
 import skala.skoro.domain.period.repository.PeriodRepository;
 import skala.skoro.global.exception.CustomException;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 

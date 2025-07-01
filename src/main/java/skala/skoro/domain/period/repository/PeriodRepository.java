@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import skala.skoro.domain.period.entity.Period;
 import skala.skoro.domain.period.entity.Unit;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
