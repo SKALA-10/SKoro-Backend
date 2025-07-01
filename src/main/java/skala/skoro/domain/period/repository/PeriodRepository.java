@@ -13,15 +13,14 @@ public interface PeriodRepository extends JpaRepository<Period, Long> {
     // 연도와 Unit으로 가장 최근 orderInYear 조회
     Optional<Period> findTopByYearAndUnitOrderByOrderInYearDesc(Integer year, Unit unit);
 
-    // 현재 진행 중이거나 다가올 평가 기간이 있는지 확인
+    // 종료되지 않은 평가 기간 조회
     @Query("""
         SELECT p
         FROM Period p
-        WHERE p.startDate >= :today
-        OR (p.startDate <= :today AND p.endDate >= :today)
+        WHERE p.periodPhase != 'COMPLETED'
         ORDER BY p.startDate ASC
         """)
-    List<Period> findUpcomingOrOngoingPeriods(@Param("today") LocalDate today);
+    List<Period> findAllNotCompleted();
 
     // 사번으로 해당 팀의 팀 평가가 있었던 기간 조회
     @Query("""

@@ -45,7 +45,7 @@ public class PeriodService {
 
     @Transactional(readOnly = true)
     public List<PeriodAvailableResponse> findPeriodAvailable() {
-        return periodRepository.findUpcomingOrOngoingPeriods(LocalDate.now()).stream()
+        return periodRepository.findAllNotCompleted().stream()
                 .map(PeriodAvailableResponse::from)
                 .collect(Collectors.toList());
     }
