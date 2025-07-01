@@ -26,7 +26,7 @@ public class TeamEvaluationStatusResponse {
         Period period = teamEvaluation.getPeriod();
         return TeamEvaluationStatusResponse.builder()
                 .teamEvaluationId(teamEvaluation.getId())
-                .status(teamEvaluation.getStatus().toFrontendView())
+                .status(teamEvaluation.getStatus())
                 .startDate(period.getStartDate())
                 .endDate(period.getEndDate())
                 .year(period.getYear())
