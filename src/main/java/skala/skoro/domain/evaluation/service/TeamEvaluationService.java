@@ -4,12 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import skala.skoro.domain.employee.entity.Employee;
+import skala.skoro.domain.employee.entity.Role;
 import skala.skoro.domain.employee.repository.TeamRepository;
 import skala.skoro.domain.employee.service.EmployeeService;
 import skala.skoro.domain.evaluation.dto.*;
-import skala.skoro.domain.evaluation.entity.Status;
-import skala.skoro.domain.evaluation.entity.TeamEvaluation;
-import skala.skoro.domain.evaluation.entity.TeamEvaluationStatus;
+import skala.skoro.domain.evaluation.entity.*;
+import skala.skoro.domain.evaluation.repository.FeedbackReportRepository;
+import skala.skoro.domain.evaluation.repository.FinalEvaluationReportRepository;
 import skala.skoro.domain.evaluation.repository.TeamEvaluationRepository;
 import skala.skoro.domain.period.entity.Period;
 import skala.skoro.domain.period.repository.PeriodRepository;
@@ -32,6 +33,10 @@ public class TeamEvaluationService {
     private final PeriodRepository periodRepository;
 
     private final TeamRepository teamRepository;
+
+    private final FinalEvaluationReportRepository finalEvaluationReportRepository;
+
+    private final FeedbackReportRepository feedbackReportRepository;
 
     @Transactional(readOnly = true)
     public List<TeamEvaluationDetailResponse> findTeamEvaluationsByYear(String empNo) {
@@ -84,10 +89,26 @@ public class TeamEvaluationService {
                 .orElseThrow(() -> new CustomException(TEAM_EVALUATION_DOES_NOT_EXIST));
     }
 
-    public void createAllTeamEvaluations(Period period){
+    public void createAllTeamEvaluations(Period period) {
         teamRepository.findAll()
-                .forEach(team -> teamEvaluationRepository.save(
-                        TeamEvaluation.of(team, period, TeamEvaluationStatus.NOT_STARTED)
-                ));
+                .forEach(team -> {
+                    TeamEvaluation teamEvaluation = teamEvaluationRepository.save(
+                            TeamEvaluation.of(team, period, TeamEvaluationStatus.NOT_STARTED)
+                    );
+
+                    List<Employee> members = employeeService.findByTeam(team).stream()
+                            .filter(employee -> Role.MEMBER.equals(employee.getRole()))
+                            .toList();
+
+                    if (period.getIsFinal()) {
+                        members.forEach(employee ->
+                                finalEvaluationReportRepository.save(FinalEvaluationReport.of(teamEvaluation, employee))
+                        );
+                    } else {
+                        members.forEach(employee ->
+                                feedbackReportRepository.save(FeedbackReport.of(teamEvaluation, employee))
+                        );
+                    }
+                });
     }
 }

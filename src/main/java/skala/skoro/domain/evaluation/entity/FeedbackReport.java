@@ -54,4 +54,11 @@ public class FeedbackReport extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "emp_no")
     private Employee employee;
+
+    public static FeedbackReport of(TeamEvaluation teamEvaluation, Employee employee) {
+        return FeedbackReport.builder()
+                .teamEvaluation(teamEvaluation)
+                .employee(employee)
+                .build();
+    }
 }
