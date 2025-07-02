@@ -48,10 +48,9 @@ public class PeerEvaluation extends BaseEntity {
         this.teamEvaluation = teamEvaluation;
     }
 
-    public void completeEvaluation(int weight, String jointTask) {
+    public void completeEvaluation(int weight) {
         this.isCompleted = true;
         this.weight = weight;
-        this.jointTask = jointTask;
     }
 
     public void updateJointTask(String task) {

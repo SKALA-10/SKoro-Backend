@@ -76,7 +76,7 @@ public class PeerEvaluationService {
         if (Boolean.TRUE.equals(peerEvaluation.getIsCompleted())) {
             throw new CustomException(PEER_EVALUATION_ALREADY_SUBMITTED);
         }
-        peerEvaluation.completeEvaluation(req.getWeight(), req.getJointTask());
+        peerEvaluation.completeEvaluation(req.getWeight());
 
         // 시스템 키워드 저장
         if (req.getKeywordIds() != null) {

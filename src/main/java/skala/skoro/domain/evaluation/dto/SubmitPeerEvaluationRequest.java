@@ -13,7 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 public class SubmitPeerEvaluationRequest {
     private Integer weight;
-    private String jointTask;
     private List<Long> keywordIds;
     private List<String> customKeywords;
 }
