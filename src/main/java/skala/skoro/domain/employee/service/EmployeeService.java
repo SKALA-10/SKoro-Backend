@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import skala.skoro.domain.employee.dto.*;
 import skala.skoro.domain.employee.entity.Employee;
+import skala.skoro.domain.employee.entity.Role;
 import skala.skoro.domain.employee.entity.Team;
 import skala.skoro.domain.employee.repository.EmployeeRepository;
 import skala.skoro.domain.evaluation.entity.TeamEvaluation;
@@ -50,6 +51,7 @@ public class EmployeeService {
         Team team = findEmployeeByEmpNo(empNo).getTeam();
 
         return employeeRepository.findByTeam(team).stream()
+                .filter(employee -> Role.MEMBER.equals(employee.getRole()))
                 .map(employee -> {
                     TempEvaluation tempEvaluation = tempEvaluationRepository.findByEmployeeAndTeamEvaluation_Id(employee, teamEvaluationId)
                             .orElseThrow(() -> new CustomException(TEMP_EVALUATION_NOT_EXISTS));
