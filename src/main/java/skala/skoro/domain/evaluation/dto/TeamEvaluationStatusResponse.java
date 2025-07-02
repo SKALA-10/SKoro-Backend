@@ -4,7 +4,6 @@ import lombok.*;
 import skala.skoro.domain.evaluation.entity.TeamEvaluation;
 import skala.skoro.domain.evaluation.entity.TeamEvaluationStatus;
 import skala.skoro.domain.period.entity.Period;
-import skala.skoro.domain.period.entity.PeriodPhase;
 import java.time.LocalDate;
 
 @Getter
