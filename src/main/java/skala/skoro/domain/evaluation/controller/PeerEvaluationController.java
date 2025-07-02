@@ -4,7 +4,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import skala.skoro.domain.auth.dto.CustomUserDetails;
 import skala.skoro.domain.evaluation.dto.KeywordResponse;
 import skala.skoro.domain.evaluation.dto.PeerEvaluationDetailResponse;
 import skala.skoro.domain.evaluation.dto.PeerEvaluationStatusResponse;
@@ -45,6 +47,12 @@ public class PeerEvaluationController {
     @GetMapping("/keywords")
     public List<KeywordResponse> getSystemKeywords() {
         return peerEvaluationService.getAllSystemKeywords();
+    }
+
+    @Operation(summary = "해당 기간 나의 동료 평가가 완료되었는지 확인")
+    @GetMapping("/period/{periodId}/peer-evaluation/completed")
+    public ResponseEntity<Boolean> isAllPeerEvaluationCompleted(@PathVariable Long periodId, @AuthenticationPrincipal CustomUserDetails user) {
+        return ResponseEntity.ok(peerEvaluationService.isAllMyPeerEvaluationCompleted(periodId, user.getUsername()));
     }
 
 }

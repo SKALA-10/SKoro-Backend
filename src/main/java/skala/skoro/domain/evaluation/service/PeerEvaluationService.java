@@ -19,13 +19,14 @@ import java.util.List;
 
 import static skala.skoro.global.exception.ErrorCode.*;
 
-
 @Service
 @RequiredArgsConstructor
 public class PeerEvaluationService {
 
     private final PeerEvaluationRepository peerEvaluationRepository;
+
     private final PeerEvaluationKeywordRepository peerEvaluationKeywordRepository;
+
     private final KeywordRepository keywordRepository;
 
     @Transactional(readOnly = true)
@@ -123,5 +124,15 @@ public class PeerEvaluationService {
                         .keywordName(k.getKeywordName())
                         .build())
                 .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public Boolean isAllPeerEvaluationCompleted(Long periodId) {
+        return !peerEvaluationRepository.existsByTeamEvaluation_Period_IdAndIsCompletedFalse(periodId);
+    }
+
+    @Transactional(readOnly = true)
+    public Boolean isAllMyPeerEvaluationCompleted(Long periodId, String empNo) {
+        return !peerEvaluationRepository.existsByTeamEvaluation_Period_IdAndEmployee_EmpNoAndIsCompletedFalse(periodId, empNo);
     }
 }
