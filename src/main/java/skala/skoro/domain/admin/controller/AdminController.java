@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import skala.skoro.domain.admin.service.PeerEvaluationNotificationService;
 import skala.skoro.domain.evaluation.service.PeerEvaluationService;
+import skala.skoro.domain.evaluation.service.TeamEvaluationService;
 import skala.skoro.domain.kpi.service.TaskService;
 import skala.skoro.domain.period.dto.PeriodAvailableResponse;
 import skala.skoro.domain.period.dto.PeriodCreateRequest;
@@ -29,6 +30,8 @@ public class AdminController {
     private final PeerEvaluationNotificationService peerEvaluationNotificationService;
 
     private final TaskService taskService;
+
+    private final TeamEvaluationService teamEvaluationService;
 
     @Operation(summary = "[관리자] 평가 기간 생성")
     @PreAuthorize("hasRole('ADMIN')")
@@ -85,5 +88,12 @@ public class AdminController {
     @GetMapping("/period/{periodId}/peer-evaluation/completed")
     public ResponseEntity<Boolean> isAllPeerEvaluationCompleted(@PathVariable Long periodId) {
         return ResponseEntity.ok(peerEvaluationService.isAllPeerEvaluationCompleted(periodId));
+    }
+
+    @Operation(summary = "[관리자] 해당 기간의 하향 평가가 완료되었는지 확인")
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/period/{periodId}/team-evaluation/submitted")
+    public ResponseEntity<Boolean> isAllManagerEvaluationSubmitted(@PathVariable Long periodId) {
+        return ResponseEntity.ok(teamEvaluationService.isAllManagerEvaluationSubmitted(periodId));
     }
 }

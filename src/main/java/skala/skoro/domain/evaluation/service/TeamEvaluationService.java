@@ -114,4 +114,10 @@ public class TeamEvaluationService {
                     }
                 });
     }
+
+    @Transactional(readOnly = true)
+    public Boolean isAllManagerEvaluationSubmitted(Long periodId) {
+        return teamEvaluationRepository.findByPeriod_Id(periodId).stream()
+                .allMatch(teamEvaluation ->  TeamEvaluationStatus.SUBMITTED.equals(teamEvaluation.getStatus()));
+    }
 }
