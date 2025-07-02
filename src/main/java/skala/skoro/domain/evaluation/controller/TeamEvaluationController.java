@@ -52,9 +52,8 @@ public class TeamEvaluationController {
     }
 
     @Operation(summary = "해당 기간에 활성화된 팀 평가 완료 여부 조회(버튼 활성화)")
-    @PreAuthorize("hasRole('MANAGER')")
     @GetMapping("/status")
-    public ResponseEntity<TeamEvaluationStatusResponse> getTeamEvaluationStatus(@AuthenticationPrincipal CustomUserDetails user){
+    public ResponseEntity<List<TeamEvaluationStatusResponse>> getTeamEvaluationStatus(@AuthenticationPrincipal CustomUserDetails user){
         return ResponseEntity.ok(teamEvaluationService.getTeamEvaluationStatus(user.getUsername()));
     }
 }

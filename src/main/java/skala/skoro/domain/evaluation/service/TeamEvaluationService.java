@@ -79,14 +79,17 @@ public class TeamEvaluationService {
     }
 
     @Transactional(readOnly = true)
-    public TeamEvaluationStatusResponse getTeamEvaluationStatus(String empNo) {
+    public List<TeamEvaluationStatusResponse> getTeamEvaluationStatus(String empNo) {
         Employee employee = employeeService.findEmployeeByEmpNo(empNo);
 
-        LocalDate today = LocalDate.now();
+        List<TeamEvaluationStatus> excluded = List.of(
+                TeamEvaluationStatus.SUBMITTED,
+                TeamEvaluationStatus.COMPLETED
+        );
 
-        return teamEvaluationRepository.findByTeamAndPeriod_StartDateLessThanEqualAndPeriod_EndDateGreaterThanEqual(employee.getTeam(), today, today)
+        return teamEvaluationRepository.findByTeamAndStatusNotIn(employee.getTeam(), excluded).stream()
                 .map(TeamEvaluationStatusResponse::from)
-                .orElseThrow(() -> new CustomException(TEAM_EVALUATION_DOES_NOT_EXIST));
+                .toList();
     }
 
     public void createAllTeamEvaluations(Period period) {

@@ -20,7 +20,6 @@ public class TeamEvaluationStatusResponse {
     private String periodName;
     private Boolean isFinal;
     private Long periodId;
-    private PeriodPhase periodPhase;
 
     public static TeamEvaluationStatusResponse from(TeamEvaluation teamEvaluation) {
         Period period = teamEvaluation.getPeriod();
@@ -33,7 +32,6 @@ public class TeamEvaluationStatusResponse {
                 .periodName(period.getPeriodName())
                 .isFinal(period.getIsFinal())
                 .periodId(period.getId())
-                .periodPhase(period.getPeriodPhase())
                 .build();
     }
 }
