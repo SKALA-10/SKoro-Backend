@@ -2,6 +2,7 @@ package skala.skoro.domain.admin.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import skala.skoro.domain.employee.entity.Employee;
 import skala.skoro.domain.employee.entity.Role;
 import skala.skoro.domain.employee.repository.EmployeeRepository;
@@ -23,6 +24,7 @@ import java.util.*;
 import static skala.skoro.global.exception.ErrorCode.PERIOD_DOES_NOT_EXIST;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class PeerEvaluationNotificationService {
 
