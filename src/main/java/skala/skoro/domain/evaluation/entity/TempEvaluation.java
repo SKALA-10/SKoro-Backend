@@ -24,7 +24,7 @@ public class TempEvaluation extends BaseEntity {
     private Double score;
 
     @Column(name = "raw_score", columnDefinition = "TEXT")
-    private Double rawScore;
+    private String rawScore;
 
     private Double managerScore;
 
