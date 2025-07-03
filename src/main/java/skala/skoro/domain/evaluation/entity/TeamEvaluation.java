@@ -2,9 +2,13 @@ package skala.skoro.domain.evaluation.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import skala.skoro.domain.common.BaseEntity;
 import skala.skoro.domain.employee.entity.Team;
 import skala.skoro.domain.period.entity.Period;
+
+import java.util.Map;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -18,8 +22,9 @@ public class TeamEvaluation extends BaseEntity {
     @Column(name = "team_evaluation_id")
     private Long id;
 
+    @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "JSON")
-    private String report;
+    private Map<String, Object> report;
 
     @Enumerated(EnumType.STRING)
     private TeamEvaluationStatus status;
@@ -33,26 +38,32 @@ public class TeamEvaluation extends BaseEntity {
     @Column(name = "ai_team_overall_analysis_comment", columnDefinition = "TEXT")
     private String aiTeamOverallAnalysisComment;
 
+    @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "ai_collaboration_matrix", columnDefinition = "JSON")
-    private String aiCollaborationMatrix;
+    private Map<String, Object> aiCollaborationMatrix;
 
+    @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "ai_team_comparison", columnDefinition = "JSON")
-    private String aiTeamComparison;
+    private Map<String, Object> aiTeamComparison;
 
+    @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "ai_team_coaching", columnDefinition = "JSON")
-    private String aiTeamCoaching;
+    private Map<String, Object> aiTeamCoaching;
 
     @Column(name = "overall_comment", columnDefinition = "TEXT")
     private String overallComment;
 
+    @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "ai_risk", columnDefinition = "JSON")
-    private String aiRisk;
+    private Map<String, Object> aiRisk;
 
+    @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "ai_plan", columnDefinition = "JSON")
-    private String aiPlan;
+    private Map<String, Object> aiPlan;
 
+    @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "middle_report", columnDefinition = "JSON")
-    private String middleReport;
+    private Map<String, Object> middleReport;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")

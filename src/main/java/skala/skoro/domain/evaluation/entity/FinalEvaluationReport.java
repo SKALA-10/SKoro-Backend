@@ -2,8 +2,12 @@ package skala.skoro.domain.evaluation.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import skala.skoro.domain.common.BaseEntity;
 import skala.skoro.domain.employee.entity.Employee;
+
+import java.util.Map;
 
 @Entity
 @Table(name = "final_evaluation_reports",
@@ -19,8 +23,9 @@ public class FinalEvaluationReport extends BaseEntity {
     @Column(name = "final_evaluation_report_id")
     private Long id;
 
+    @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "report", columnDefinition = "JSON")
-    private String report;
+    private Map<String, Object> report;
 
     private Integer ranking;
 
@@ -38,14 +43,16 @@ public class FinalEvaluationReport extends BaseEntity {
     @Column(name = "ai_peer_talk_summary", columnDefinition = "TEXT")
     private String aiPeerTalkSummary;
 
+    @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "ai_4p_evaluation", columnDefinition = "JSON")
-    private String ai4pEvaluation;
+    private Map<String, Object> ai4pEvaluation;
 
     @Column(name = "cl_reason", columnDefinition = "TEXT")
     private String clReason;
 
+    @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "ai_growth_coaching", columnDefinition = "JSON")
-    private String aiGrowthCoaching;
+    private Map<String, Object> aiGrowthCoaching;
 
     @Column(name = "overall_comment", columnDefinition = "TEXT")
     private String overallComment;
