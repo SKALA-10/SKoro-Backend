@@ -24,6 +24,7 @@ public enum ErrorCode {
     TASK_NOT_FOUND(HttpStatus.NOT_FOUND, "요청에 해당하는 개인 TASK 데이터가 존재하지 않습니다."),
     INVALID_PHASE_TRANSITION(HttpStatus.BAD_REQUEST, "현재 단계에서 다음 단계로 전환할 수 없습니다."),
     IS_FINAL_IS_NULL(HttpStatus.BAD_REQUEST, "period에 최종 여부 데이터가 존재하지 않습니다."),
+    PROMPT_NOT_FOUND(HttpStatus.NOT_FOUND, "prompt가 존재하지 않습니다."),
     ;
 
     private final HttpStatus httpStatus;
