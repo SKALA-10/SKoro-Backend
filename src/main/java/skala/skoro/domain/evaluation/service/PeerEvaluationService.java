@@ -41,6 +41,7 @@ public class PeerEvaluationService {
                 .map(k -> KeywordResponse.builder()
                         .keywordId(k.getId())
                         .keywordName(k.getKeywordName())
+                        .sentiment(k.getSentiment())
                         .build())
                 .toList();
 

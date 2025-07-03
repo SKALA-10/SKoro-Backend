@@ -20,6 +20,9 @@ public class Keyword extends BaseEntity {
     @Column(name = "keyword_name")
     private String keywordName;
 
+    @Enumerated(EnumType.STRING)
+    private Sentiment sentiment;
+
     @Builder
     public Keyword(String keywordName) {
         this.keywordName = keywordName;
