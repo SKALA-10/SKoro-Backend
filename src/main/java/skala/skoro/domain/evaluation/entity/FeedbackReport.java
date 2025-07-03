@@ -19,7 +19,7 @@ public class FeedbackReport extends BaseEntity {
     @Column(name = "feedback_report_id")
     private Long id;
 
-    @Column(name = "report", columnDefinition = "TEXT")
+    @Column(name = "report", columnDefinition = "JSON")
     private String report;
 
     private Integer ranking;
@@ -32,16 +32,16 @@ public class FeedbackReport extends BaseEntity {
     @Column(name = "ai_overall_contribution_summary_comment", columnDefinition = "TEXT")
     private String aiOverallContributionSummaryComment;
 
-    @Column(name = "ai_peer_talk_summary", columnDefinition = "TEXT")
+    @Column(name = "ai_peer_talk_summary", columnDefinition = "JSON")
     private String aiPeerTalkSummary;
 
-    @Column(name = "ai_4p_evaluation", columnDefinition = "TEXT")
+    @Column(name = "ai_4p_evaluation", columnDefinition = "JSON")
     private String ai4pEvaluation;
 
     @Column(name = "ai_achievement_rate")
     private Integer aiAchievementRate;
 
-    @Column(name = "ai_growth_coaching", columnDefinition = "TEXT")
+    @Column(name = "ai_growth_coaching", columnDefinition = "JSON")
     private String aiGrowthCoaching;
 
     @Column(name = "overall_comment", columnDefinition = "TEXT")

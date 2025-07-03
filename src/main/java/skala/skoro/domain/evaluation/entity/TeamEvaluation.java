@@ -18,7 +18,7 @@ public class TeamEvaluation extends BaseEntity {
     @Column(name = "team_evaluation_id")
     private Long id;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "JSON")
     private String report;
 
     @Enumerated(EnumType.STRING)
@@ -33,25 +33,25 @@ public class TeamEvaluation extends BaseEntity {
     @Column(name = "ai_team_overall_analysis_comment", columnDefinition = "TEXT")
     private String aiTeamOverallAnalysisComment;
 
-    @Column(name = "ai_collaboration_matrix", columnDefinition = "TEXT")
+    @Column(name = "ai_collaboration_matrix", columnDefinition = "JSON")
     private String aiCollaborationMatrix;
 
-    @Column(name = "ai_team_comparison", columnDefinition = "TEXT")
+    @Column(name = "ai_team_comparison", columnDefinition = "JSON")
     private String aiTeamComparison;
 
-    @Column(name = "ai_team_coaching", columnDefinition = "TEXT")
+    @Column(name = "ai_team_coaching", columnDefinition = "JSON")
     private String aiTeamCoaching;
 
     @Column(name = "overall_comment", columnDefinition = "TEXT")
     private String overallComment;
 
-    @Column(name = "ai_risk", columnDefinition = "TEXT")
+    @Column(name = "ai_risk", columnDefinition = "JSON")
     private String aiRisk;
 
-    @Column(name = "ai_plan", columnDefinition = "TEXT")
+    @Column(name = "ai_plan", columnDefinition = "JSON")
     private String aiPlan;
 
-    @Column(name = "middle_report", columnDefinition = "TEXT")
+    @Column(name = "middle_report", columnDefinition = "JSON")
     private String middleReport;
 
     @ManyToOne(fetch = FetchType.LAZY)
