@@ -12,6 +12,7 @@ import skala.skoro.domain.evaluation.entity.*;
 import skala.skoro.domain.evaluation.repository.FeedbackReportRepository;
 import skala.skoro.domain.evaluation.repository.FinalEvaluationReportRepository;
 import skala.skoro.domain.evaluation.repository.TeamEvaluationRepository;
+import skala.skoro.domain.evaluation.repository.TempEvaluationRepository;
 import skala.skoro.domain.period.entity.Period;
 import skala.skoro.domain.period.repository.PeriodRepository;
 import skala.skoro.global.exception.CustomException;
@@ -19,6 +20,7 @@ import java.util.Optional;
 import java.time.LocalDate;
 import java.util.List;
 
+import static skala.skoro.global.exception.ErrorCode.INCOMPLETE_DOWNWARD_EVALUATIONS;
 import static skala.skoro.global.exception.ErrorCode.TEAM_EVALUATION_DOES_NOT_EXIST;
 
 @Service
@@ -37,6 +39,8 @@ public class TeamEvaluationService {
     private final FinalEvaluationReportRepository finalEvaluationReportRepository;
 
     private final FeedbackReportRepository feedbackReportRepository;
+
+    private final TempEvaluationRepository tempEvaluationRepository;
 
     @Transactional(readOnly = true)
     public List<TeamEvaluationDetailResponse> findTeamEvaluationsByYear(String empNo) {
@@ -76,6 +80,19 @@ public class TeamEvaluationService {
         return teamEvaluationRepository.findTeamAndAllAverageByYear(employee.getTeam().getId()).stream()
                 .map(FinalEvaluationAchievementStatsResponse::from)
                 .toList();
+    }
+
+    public void submitEvaluation(Long teamEvaluationId) {
+        TeamEvaluation teamEvaluation = teamEvaluationRepository.findById(teamEvaluationId)
+                .orElseThrow(() -> new CustomException(TEAM_EVALUATION_DOES_NOT_EXIST));
+
+        boolean hasUncompleted = tempEvaluationRepository.existsByTeamEvaluationAndStatusNot(teamEvaluation, Status.COMPLETED);
+
+        if (hasUncompleted) {
+            throw new CustomException(INCOMPLETE_DOWNWARD_EVALUATIONS);
+        }
+
+        teamEvaluation.updateStatus(TeamEvaluationStatus.SUBMITTED);
     }
 
     @Transactional(readOnly = true)

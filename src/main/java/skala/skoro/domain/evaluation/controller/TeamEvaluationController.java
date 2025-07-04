@@ -6,10 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import skala.skoro.domain.auth.dto.CustomUserDetails;
 import skala.skoro.domain.evaluation.dto.*;
 import skala.skoro.domain.evaluation.service.TeamEvaluationService;
@@ -49,6 +46,14 @@ public class TeamEvaluationController {
     @GetMapping("/average-achievement-rate")
     public ResponseEntity<List<FinalEvaluationAchievementStatsResponse>> getFinalTeamEvaluationAverageAchievementRate(@AuthenticationPrincipal CustomUserDetails user){
         return ResponseEntity.ok(teamEvaluationService.getFinalTeamAndAllAverageAchievementRate(user.getUsername()));
+    }
+
+    @Operation(summary = "[팀장] 하향 평가 제출")
+    @PreAuthorize("hasRole('MANAGER')")
+    @PutMapping("/{teamEvaluationId}/submitted")
+    public ResponseEntity<Void> submitEvaluation(@PathVariable Long teamEvaluationId){
+        teamEvaluationService.submitEvaluation(teamEvaluationId);
+        return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "해당 기간에 활성화된 팀 평가 완료 여부 조회(버튼 활성화)")
