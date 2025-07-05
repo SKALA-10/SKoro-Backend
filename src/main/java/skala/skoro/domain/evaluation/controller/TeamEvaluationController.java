@@ -50,7 +50,7 @@ public class TeamEvaluationController {
 
     @Operation(summary = "[팀장] 하향 평가 제출")
     @PreAuthorize("hasRole('MANAGER')")
-    @PutMapping("/{teamEvaluationId}/submitted")
+    @PutMapping("/{teamEvaluationId}/submit")
     public ResponseEntity<Void> submitEvaluation(@PathVariable Long teamEvaluationId){
         teamEvaluationService.submitEvaluation(teamEvaluationId);
         return ResponseEntity.ok().build();
